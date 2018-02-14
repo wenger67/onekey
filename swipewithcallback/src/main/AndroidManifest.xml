@@ -1,0 +1,28 @@
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
+          package="com.vinsonzhan.onekey.swipewithcallback"
+>
+
+    <application android:allowBackup="true"
+                 android:label="@string/app_name"
+                 android:supportsRtl="true"
+    >
+
+    </application>
+
+</manifest>

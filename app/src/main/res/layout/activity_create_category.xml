@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:textSize="24dp"/>
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_toEndOf="@id/icon"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:hint="@string/create_category_hint"
+        android:maxLength="@integer/max_letter"
+        android:maxLines="1"
+        android:layout_marginEnd="48dp"
+        android:textSize="@dimen/middle_title"/>
+
+    <com.beardedhen.androidbootstrap.BootstrapButton
+        android:id="@+id/save"
+        android:layout_width="56dp"
+        android:layout_height="48dp"
+        android:clickable="true"
+        android:gravity="center"
+        app:bootstrapBrand="warning"
+        app:bootstrapSize="lg"
+        android:layout_alignParentEnd="true"
+        app:fontAwesomeIcon="fa_check"/>
+
+
+    <GridView
+        android:id="@+id/icon_grid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/icon"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:numColumns="6"/>
+</RelativeLayout>

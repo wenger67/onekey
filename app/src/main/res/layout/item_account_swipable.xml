@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<com.vinsonzhan.onekey.swipewithcallback.EasySwipeMenuLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/account_item"
+    app:contentView="@+id/content"
+    app:rightMenuView="@+id/right"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp">
+
+    <LinearLayout
+        android:id="@+id/right"
+        android:layout_width="160dp"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/account_del"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:text="@string/account_del"
+            android:textSize="@dimen/middle_title"
+            app:bootstrapBrand="danger"/>
+
+        <com.beardedhen.androidbootstrap.BootstrapButton
+            android:id="@+id/account_mod"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"
+            android:background="@color/colorPrimary"
+            android:gravity="center"
+            android:text="@string/account_mod"
+            android:textSize="@dimen/middle_title"
+            app:bootstrapBrand="success"/>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/content"
+        layout="@layout/item_account"/>
+
+</com.vinsonzhan.onekey.swipewithcallback.EasySwipeMenuLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***************************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/mine_shaft"
+              android:orientation="vertical">
+
+    <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
+        android:id="@+id/profile_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="104dp"
+        android:src="@drawable/img_no_avatar"
+        app:hasBorder="true"
+        />
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/profile_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="36dp"
+        android:fontFamily="sans-serif-thin"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Welcome"
+        android:textColor="@color/white"
+        android:textSize="34sp"/>
+
+    <com.andrognito.patternlockview.PatternLockView
+        android:id="@+id/pattern_lock_view"
+        android:layout_width="280dp"
+        android:layout_height="280dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        app:aspectRatio="square"
+        app:aspectRatioEnabled="true"
+        app:dotAnimationDuration="150"
+        app:dotCount="3"/>
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:textSize="16sp"
+        android:visibility="invisible"/>
+</LinearLayout>

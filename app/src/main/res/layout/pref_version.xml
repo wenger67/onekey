@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dip"
+    android:layout_marginEnd="6dip"
+    android:layout_marginStart="15dp"
+    android:layout_marginTop="6dip"
+    android:gravity="center_vertical"
+    android:minHeight="?android:attr/listPreferredItemHeight">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:text="@string/version"
+        android:layout_marginStart="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"/>
+
+    <TextView
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_alignParentEnd="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black"/>
+</RelativeLayout>

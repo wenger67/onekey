@@ -1,0 +1,95 @@
+<resources>
+    <string name="app_name">OneKey</string>
+
+    <!-- start page -->
+    <string name="start_input_pw_hint">Please input password</string>
+    <string name="tips_create_lock_key">Please Create Lock Key</string>
+    <string name="draw_secret">Please Draw Secret</string>
+    <string name="draw_secret_again">Please Draw The Same Secret Again</string>
+    <string name="go_to_login">Goto login {fa_sign_in}</string>
+    <string name="pattern_right">Draw the right pattern {fa_hand_o_right}</string>
+    <string name="pattern_error">Draw the wrong pattern, try again</string>
+
+    <!-- category res-->
+    <string name="category_email">Email Account</string>
+    <string name="category_note">Secret Notes</string>
+    <string name="category_website">Web Account</string>
+    <string name="category_game">Game Account</string>
+    <string name="category_chat">Chat Account</string>
+    <string name="category_bank">Bank Account</string>
+    <string name="category_bus">Trans. Account</string>
+    <string name="category_shopping">Shopping Account</string>
+    <string name="category_book">Reading Account</string>
+    <string name="category_money">Money Account</string>
+    <string name="category_home">Home Account</string>
+    <string name="category_wallet">Credit Account</string>
+    <string name="category_map">Map Account</string>
+    <string name="category_health">Health Account</string>
+    <string name="category_sport">Sport Account</string>
+    <string name="category_video">Video Account</string>
+    <string name="category_media">Media Account</string>
+    <string name="category_tools">Tools Account</string>
+    <string name="category_company">company Account</string>
+    <string name="category_others">Others Account</string>
+    <!-- category res end-->
+
+    <!-- create account-->
+    <string name="create_title_hint">Title</string>
+    <string name="create_account">Account</string>
+    <string name="create_password">Password</string>
+    <string name="create_hint">Click to enter</string>
+    <string name="create_comment_hint">Comment</string>
+    <string name="create_save">Save</string>
+    <string name="exceed_length_tip">The input text has exceeded 32 letter</string>
+    <string name="not_complete_tip">The input can not be empty</string>
+    <!-- create account end -->
+
+    <!-- account ops-->
+    <string name="account_del">Delete</string>
+    <string name="account_mod">Modify</string>
+    <string name="account_del_confirm">Confirm delete</string>
+    <string name="category_click_tips">Long press [Category] to create responded account</string>
+    <!-- account ops end-->
+
+    <!-- category create -->
+    <string name="create_category_hint">Pleate input category name</string>
+    <!-- category create end-->
+
+    <!-- main page -->
+    <string name="copy_success">has been copied into clipboard</string>
+    <!-- main page end-->
+
+    <!-- prefernce page-->
+    <string name="login_setting">Login Setting</string>
+    <string name="change_secret">Change Secret</string>
+    <string name="random_keyboard">Random Keyboard</string>
+    <string name="fingerprint">Fingerprint</string>
+
+    <string name="secure_setting">Secure Setting</string>
+    <string name="login_record">Login Record</string>
+
+    <string name="account_binding">Account Binding</string>
+    <string name="weixin">Weixin</string>
+    <string name="phone">Phone Number</string>
+
+    <string name="data_backup">Data Backup</string>
+    <string name="backup">Backup data into cloud</string>
+    <string name="restore">Restore data from cloud</string>
+    <string name="send">Send data into mail box</string>
+
+    <string name="about">About</string>
+    <string name="vip">Pro. feature</string>
+    <string name="feedback">Advice Feedback</string>
+    <string name="version">Version</string>
+    <string name="copyright">©Copyright Onekey LLC</string>
+
+    <!-- prefernce page end-->
+    <!-- title -->
+    <string name="search">Search</string>
+    <string name="setting">Setting</string>
+    <string name="account">Create Account</string>
+    <string name="modify">Modify Account</string>
+    <string name="category">Create Category</string>
+    <!-- title end-->
+
+</resources>

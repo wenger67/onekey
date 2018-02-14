@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="@string/login_setting">
+        <Preference
+            android:key="changeSecret"
+            android:title="@string/change_secret"/>
+        <SwitchPreference
+            android:key="randomKeyBoard"
+            android:title="@string/random_keyboard"/>
+        <SwitchPreference
+            android:key="fingerPrint"
+            android:title="@string/fingerprint"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/secure_setting">
+        <Preference
+            android:key="record"
+            android:title="@string/login_record"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/account_binding">
+        <Preference
+            android:key="weixin"
+            android:title="@string/weixin"/>
+        <Preference
+            android:key="phone"
+            android:title="@string/phone"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/data_backup">
+        <Preference
+            android:key="backup"
+            android:title="@string/backup"/>
+        <Preference
+            android:key="restore"
+            android:title="@string/restore"/>
+        <Preference
+            android:key="sendData"
+            android:title="@string/send"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/about">
+        <Preference
+            android:key="vip"
+            android:title="@string/vip"/>
+        <Preference
+            android:key="feedback"
+            android:title="@string/feedback"/>
+        <com.vinsonzhan.onekey.setting.VersionPreference
+            android:key="version"/>
+        <Preference
+            android:key="copyright"
+            android:title="@string/copyright"/>
+    </PreferenceCategory>
+</PreferenceScreen>

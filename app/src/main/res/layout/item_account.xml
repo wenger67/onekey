@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="145dp"
+                android:background="@color/white">
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/account_title_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="8dp"
+        app:fontAwesomeIcon="fa_circle"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/account_title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignTop="@id/account_title_icon"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:lines="1"
+        android:layout_toEndOf="@id/account_title_icon"
+        android:gravity="center_vertical|start"
+        android:textSize="@dimen/middle_title"/>
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/account_username_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/account_title_icon"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/account_username_tv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignTop="@id/account_username_icon"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:lines="1"
+        android:clickable="true"
+        android:layout_toEndOf="@id/account_username_icon"
+        android:gravity="center_vertical|start"
+        android:textSize="@dimen/middle_content"/>
+
+    <ImageView
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@id/account_username_icon"
+        android:contentDescription="@null"
+        android:src="@color/bg"/>
+
+    <com.beardedhen.androidbootstrap.AwesomeTextView
+        android:id="@+id/account_password_icon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_below="@id/divider"
+        android:gravity="center"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        app:fontAwesomeIcon="fa_lock"
+        android:textSize="16dp"/>
+
+    <TextView
+        android:id="@+id/account_password_tv"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_alignTop="@id/account_password_icon"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:clickable="true"
+        android:lines="1"
+        android:layout_toEndOf="@id/account_password_icon"
+        android:gravity="center_vertical|start"
+        android:textSize="@dimen/middle_content"/>
+</RelativeLayout>

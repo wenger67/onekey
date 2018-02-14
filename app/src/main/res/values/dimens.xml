@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<resources>
+    <dimen name="small_tips">12sp</dimen>
+    <dimen name="middle_content">14sp</dimen>
+    <dimen name="middle_title">16sp</dimen>
+    <dimen name="app_bar">20sp</dimen>
+    <dimen name="large_content">20sp</dimen>
+    <dimen name="large_title">24sp</dimen>
+    <integer name="max_letter">32</integer>
+</resources>

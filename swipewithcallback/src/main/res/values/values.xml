@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<resources>
+    <declare-styleable name="EasySwipeMenuLayout">
+        <attr format="reference" name="leftMenuView"/>
+        <attr format="reference" name="rightMenuView"/>
+        <attr format="reference" name="contentView"/>
+        <attr format="boolean" name="canRightSwipe"/>
+        <attr format="boolean" name="canLeftSwipe"/>
+        <attr format="float" name="fraction"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ /* ******************************* Copyright (c)*********************************\
+  ~  **
+  ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
+  ~  ** All Rights Reserved
+  ~  **
+  ~  ** By( The OneKey Project)
+  ~  **
+  ~  *********************************版本信息*******************************
+  ~  ** 版 本: V0.1
+  ~  ***********************************************************************
+  ~  ********************************End of Head************************************\
+  ~  */
+  -->
+
+<resources>
+    <string name="app_name">密码本</string>
+
+    <!-- start page -->
+    <string name="start_input_pw_hint">请绘制密码</string>
+    <string name="tips_create_lock_key">请创建绘制密码</string>
+    <string name="draw_secret">请绘制密码</string>
+    <string name="draw_secret_again">请再次绘制密码</string>
+    <string name="go_to_login">进行登录 {fa_sign_in}</string>
+    <string name="pattern_right">绘制密码正确 {fa_hand_o_right}</string>
+    <string name="pattern_error">绘制密码错误，请重新绘制</string>
+
+    <!-- category res-->
+    <string name="category_email">邮件账户</string>
+    <string name="category_note">私密日记</string>
+    <string name="category_website">网站账户</string>
+    <string name="category_game">游戏账户</string>
+    <string name="category_chat">聊天账户</string>
+    <string name="category_bank">银行账户</string>
+    <string name="category_bus">出行账户</string>
+    <string name="category_shopping">购物账户</string>
+    <string name="category_book">阅读账户</string>
+    <string name="category_money">理财账户</string>
+    <string name="category_home">家庭账户</string>
+    <string name="category_wallet">信用账户</string>
+    <string name="category_map">地图账户</string>
+    <string name="category_health">健康账户</string>
+    <string name="category_sport">运动账户</string>
+    <string name="category_video">视频账户</string>
+    <string name="category_media">媒体账户</string>
+    <string name="category_tools">工具账户</string>
+    <string name="category_company">公司账户</string>
+    <string name="category_others">其他账户</string>
+    <!-- category res end-->
+
+    <!-- create account-->
+    <string name="create_title_hint">标题</string>
+    <string name="create_account">账户</string>
+    <string name="create_password">密码</string>
+    <string name="create_hint">点击输入</string>
+    <string name="create_comment_hint">备注</string>
+    <string name="create_save">保存</string>
+    <!-- create account end -->
+
+    <!-- account ops-->
+    <string name="account_del">删除</string>
+    <string name="account_mod">修改</string>
+    <string name="account_del_confirm">确认删除</string>
+    <string name="category_click_tips">长按 【类目】 来创对应的账户</string>
+    <!-- account ops end-->
+
+    <!-- category create -->
+    <string name="create_category_hint">请输入类别名称</string>
+    <!-- category create end-->
+    
+    <!-- main page -->
+    <string name="copy_success">已经复制到剪切板</string>
+    <!-- main page end-->
+
+    <!-- prefernce page-->
+    <string name="login_setting">登录设置</string>
+    <string name="change_secret">更改密码</string>
+    <string name="random_keyboard">键盘乱序</string>
+    <string name="fingerprint">指纹解锁</string>
+
+    <string name="secure_setting">安全设置</string>
+    <string name="login_record">登录记录</string>
+
+    <string name="account_binding">账户绑定</string>
+    <string name="weixin">微信</string>
+    <string name="phone">手机号</string>
+
+    <string name="data_backup">数据备份</string>
+    <string name="backup">备份数据到云端</string>
+    <string name="restore">从云端恢复数据</string>
+    <string name="send">将数据发送到邮箱</string>
+
+    <string name="about">关于</string>
+    <string name="vip">高级功能</string>
+    <string name="feedback">建议</string>
+    <string name="version">版本</string>
+    <string name="copyright">©Copyright Onekey LLC</string>
+    <!-- prefernce page end-->
+
+    <!-- title -->
+    <string name="search">搜索</string>
+    <string name="setting">设置</string>
+    <string name="account">创建账户</string>
+    <string name="modify">修改账户</string>
+    <string name="category">创建类别</string>
+    <!-- title end-->
+</resources>

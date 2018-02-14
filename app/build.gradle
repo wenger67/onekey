@@ -1,0 +1,89 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
+
+android {
+    signingConfigs {
+        release {
+            keyAlias 'vinson'
+            keyPassword '985644zw'
+            storeFile file('/home/vinsonzhan/vinsonsigned.jks')
+            storePassword '985644zw'
+        }
+        debug {
+            keyAlias 'vinson'
+            keyPassword '985644zw'
+            storeFile file('/home/vinsonzhan/vinsonsigned.jks')
+            storePassword '985644zw'
+        }
+    }
+    compileSdkVersion 26
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "com.vinsonzhan.onekey"
+        minSdkVersion 17
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+            signingConfig signingConfigs.release
+            renderscriptDebuggable false
+            renderscriptOptimLevel 3
+            zipAlignEnabled true
+            proguardFile '/home/vinsonzhan/dev/onekey/app/proguard-rules.pro'
+            applicationIdSuffix 'release'
+            versionNameSuffix 'release'
+        }
+        debug {
+            debuggable true
+            jniDebuggable true
+            signingConfig signingConfigs.debug
+            renderscriptDebuggable false
+            renderscriptOptimLevel 3
+            minifyEnabled false
+            zipAlignEnabled false
+            proguardFile '/home/vinsonzhan/dev/onekey/app/proguard-rules.pro'
+            applicationIdSuffix 'debug'
+            versionNameSuffix 'debug'
+        }
+    }
+}
+
+greendao {
+    schemaVersion 5 // sqlite version
+    daoPackage 'com.vinsonzhan.onekey.greendao'//DaoMaster、DaoSession、Dao package name
+    targetGenDir 'src/main/java'//DaoMaster、DaoSession、Dao --> dir path
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:26.+'
+    compile 'com.android.support:recyclerview-v7:26.+'
+    compile 'com.android.support:design:26.+'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha7'
+    testCompile 'junit:junit:4.12'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    compile 'com.beardedhen:androidbootstrap:2.3.2'
+    compile 'com.github.zhaokaiqiang.klog:library:1.6.0'
+    compile 'com.andrognito.patternlockview:patternlockview:1.0.0'
+    compile 'com.blankj:utilcode:1.12.0'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
+    compile 'org.greenrobot:greendao:3.2.2'
+    // add library
+    //    compile 'net.zetetic:android-database-sqlcipher:3.5.6'
+    compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+    compile 'com.androidadvance:topsnackbar:1.1.1'
+    compile 'com.wei.android.lib:fingerprintidentify:1.2.1'
+    compile project(':swipewithcallback')
+}
