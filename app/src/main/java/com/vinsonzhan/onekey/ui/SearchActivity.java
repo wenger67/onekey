@@ -22,11 +22,11 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
@@ -60,7 +60,7 @@ import butterknife.ButterKnife;
 public class SearchActivity extends BaseActivity implements OpsListener, CopyListener {
 
     @BindView(R.id.search_view) SearchView searchView;
-    @BindView(R.id.search_result) ListViewCompat searchResult;
+    @BindView(R.id.search_result) ListView searchResult;
 
     SearchResultAdapter adapter;
     String curStr;
