@@ -73,6 +73,9 @@ greendao {
 }
 
 dependencies {
+    configurations {
+        all*.exclude group: 'com.android.support', module: 'support-v13'
+    }
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -90,6 +93,7 @@ dependencies {
     implementation 'com.blankj:utilcode:1.12.0'
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.34'
     implementation 'org.greenrobot:greendao:3.2.2'
+    implementation 'com.marshalchen.ultimaterecyclerview:library:0.7.3'
     // add library
     //    compile 'net.zetetic:android-database-sqlcipher:3.5.6'
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'

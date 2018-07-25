@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">OneKey</string>
 
+    <string name="nav_drawer_open" translatable="false">open drawer</string>
+    <string name="nav_drawer_close" translatable="false">close drawer</string>
+
     <!-- start page -->
     <string name="start_input_pw_hint">Please input password</string>
     <string name="tips_create_lock_key">Please Create Lock Key</string>

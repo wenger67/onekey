@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_camera"
+            android:icon="@color/bootstrap_brand_secondary_border"
+            android:title="Import"/>
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@color/bootstrap_brand_secondary_fill"
+            android:title="Gallery"/>
+        <item
+            android:id="@+id/nav_slideshow"
+            android:icon="@color/bootstrap_brand_success"
+            android:title="Slideshow"/>
+        <item
+            android:id="@+id/nav_manage"
+            android:icon="@color/bootstrap_edittext_disabled"
+            android:title="Tools"/>
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@color/design_default_color_primary"
+                android:title="Share"/>
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@color/bootstrap_gray_lightest"
+                android:title="Send"/>
+        </menu>
+    </item>
+
+</menu>

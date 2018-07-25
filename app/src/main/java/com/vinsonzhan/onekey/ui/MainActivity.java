@@ -23,12 +23,18 @@ import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.design.widget.NavigationView;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
@@ -60,7 +66,9 @@ import butterknife.ButterKnife;
 public class MainActivity extends BaseExitActivity implements OpsListener, CopyListener {
 
     @BindView(R.id.rv_category) RecyclerView recyclerView;
-
+    @BindView(R.id.navigation) NavigationView navigationView;
+    @BindView(R.id.toolBar) android.support.v7.widget.Toolbar toolbar;
+    @BindView(R.id.drawer) DrawerLayout drawerLayout;
     ArrayList<MultiItemEntity> list;
     ExpandableItemAdapter adapter;
     FloatingActionButton fBtn;
@@ -71,6 +79,16 @@ public class MainActivity extends BaseExitActivity implements OpsListener, CopyL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout,toolbar,
+                R.string.nav_drawer_open, R.string.nav_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp);
+        if (getSupportActionBar() != null) getSupportActionBar().setDisplayShowTitleEnabled(true);
+        if (getSupportActionBar() != null) getSupportActionBar().setHomeButtonEnabled(true);
+        toggle.syncState();
+
         adapter = new ExpandableItemAdapter(new ArrayList<MultiItemEntity>());
         adapter.setListener(this);
         adapter.setCopyListener(this);
@@ -128,6 +146,26 @@ public class MainActivity extends BaseExitActivity implements OpsListener, CopyL
         fab.setClickable(true);
 
         return fab;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.tool_bar, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+        switch (item.getItemId()) {
+            case R.id.action_search:
+                this.startActivity(new Intent(MainActivity.this, SearchActivity.class));
+                return true;
+            case R.id.action_create:
+                this.startActivity(new Intent(MainActivity.this, CreateAcountActivity.class));
+                return true;
+        }
+        return true;
     }
 
     private void setupFloatingAction() {
