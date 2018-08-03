@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /* ******************************* Copyright (c)*********************************\
   ~  **
   ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
@@ -15,10 +14,10 @@
   -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bg">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg">
 
     <LinearLayout
         android:id="@+id/category_selector"
@@ -36,10 +35,10 @@
             android:layout_height="match_parent"
             android:layout_weight="0.8"
             android:gravity="center_vertical"
-            android:paddingEnd="16dp"
             android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:popupBackground="@color/white"
-            android:spinnerMode="dropdown"/>
+            android:spinnerMode="dropdown" />
 
         <com.beardedhen.androidbootstrap.BootstrapButton
             android:id="@+id/category_creator"
@@ -47,7 +46,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.2"
             app:bootstrapBrand="success"
-            app:bootstrapSize="lg"/>
+            app:bootstrapSize="lg" />
     </LinearLayout>
 
     <EditText
@@ -57,12 +56,13 @@
         android:layout_below="@id/category_selector"
         android:layout_marginTop="16dp"
         android:background="@color/white"
+        android:cursorVisible="false"
         android:hint="@string/create_title_hint"
         android:maxLength="@integer/max_letter"
         android:maxLines="1"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
-        android:textSize="@dimen/middle_title"/>
+        android:paddingEnd="16dp"
+        android:textSize="@dimen/middle_title" />
 
     <LinearLayout
         android:id="@+id/create_account_container"
@@ -76,24 +76,25 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/create_account"
-            android:textSize="@dimen/middle_content"/>
+            android:textSize="@dimen/middle_content" />
 
         <EditText
             android:id="@+id/create_account"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@color/white"
+            android:cursorVisible="false"
             android:gravity="end"
             android:hint="@string/create_hint"
             android:maxLength="@integer/max_letter"
             android:maxLines="1"
-            android:textSize="@dimen/middle_content"/>
+            android:textSize="@dimen/middle_content" />
     </LinearLayout>
 
     <ImageView
@@ -102,7 +103,7 @@
         android:layout_height="1dp"
         android:layout_below="@id/create_account_container"
         android:background="@color/bg"
-        android:contentDescription="@null"/>
+        android:contentDescription="@null" />
 
     <LinearLayout
         android:id="@+id/create_password_container"
@@ -115,25 +116,26 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginLeft="16dp"
             android:text="@string/create_password"
-            android:textSize="@dimen/middle_content"/>
+            android:textSize="@dimen/middle_content" />
 
         <EditText
             android:id="@+id/create_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginLeft="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@color/white"
+            android:cursorVisible="false"
             android:gravity="end"
             android:hint="@string/create_hint"
             android:inputType="textPassword"
             android:maxLength="@integer/max_letter"
             android:maxLines="1"
-            android:textSize="@dimen/middle_content"/>
+            android:textSize="@dimen/middle_content" />
     </LinearLayout>
 
     <EditText
@@ -143,8 +145,9 @@
         android:layout_below="@id/create_password_container"
         android:layout_marginTop="16dp"
         android:background="@color/white"
+        android:cursorVisible="false"
         android:hint="@string/create_comment_hint"
-        android:padding="16dp"/>
+        android:padding="16dp" />
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/create_save"
@@ -153,5 +156,5 @@
         android:layout_below="@id/create_comment"
         android:text="@string/create_save"
         android:textSize="@dimen/middle_title"
-        app:bootstrapBrand="warning"/>
+        app:bootstrapBrand="warning" />
 </RelativeLayout>

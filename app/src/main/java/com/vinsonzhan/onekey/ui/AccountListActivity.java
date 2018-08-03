@@ -1,18 +1,3 @@
-/*
- *  ******************************* Copyright (c)*********************************\
- *  **
- *  ** (c) Copyright 2018,VinsonZhan, china, wuhan
- *  ** All Rights Reserved
- *  **
- *  ** By( The OneKey Project)
- *  **
- *  *********************************版本信息*******************************
- *  ** 版 本: V0.1
- *  ***********************************************************************
- *  ********************************End of Head************************************\
- *
- */
-
 package com.vinsonzhan.onekey.ui;
 
 import android.content.Intent;
@@ -30,13 +15,11 @@ import android.widget.TextView;
 
 import com.androidadvance.topsnackbar.TSnackbar;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
-import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.SnackbarUtils;
 import com.socks.library.KLog;
 import com.vinsonzhan.onekey.R;
-import com.vinsonzhan.onekey.adapter.CategoryAdapter;
-import com.vinsonzhan.onekey.adapter.OpsType;
+import com.vinsonzhan.onekey.adapter.AccountAdapter;
 import com.vinsonzhan.onekey.common.OpsListener;
+import com.vinsonzhan.onekey.model.Account;
 import com.vinsonzhan.onekey.model.Category;
 import com.vinsonzhan.onekey.util.DataUtil;
 
@@ -47,8 +30,8 @@ import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
-public class MainActivity extends BaseExitActivity implements OpsListener, FlexibleAdapter
-        .OnItemClickListener, FlexibleAdapter.OnItemLongClickListener {
+public class AccountListActivity extends BaseActivity implements OpsListener, FlexibleAdapter
+        .OnItemClickListener, FlexibleAdapter.OnItemLongClickListener, FlexibleAdapter.OnItemSwipeListener {
 
     @BindView(R.id.rv_category)
     RecyclerView recyclerView;
@@ -58,13 +41,16 @@ public class MainActivity extends BaseExitActivity implements OpsListener, Flexi
     android.support.v7.widget.Toolbar toolbar;
     @BindView(R.id.drawer)
     DrawerLayout drawerLayout;
-    CategoryAdapter adapter;
+    AccountAdapter adapter;
+    Category mCurCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mCurCategory = getIntent().getParcelableExtra(CreateAcountActivity.EXTRA_CATEGORY);
 
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
@@ -75,9 +61,9 @@ public class MainActivity extends BaseExitActivity implements OpsListener, Flexi
         if (getSupportActionBar() != null) getSupportActionBar().setHomeButtonEnabled(true);
         toggle.syncState();
 
-        List<Category> categories = DataUtil.getData();
+        List<Account> accounts = DataUtil.getAccountsByCategory(mCurCategory);
 
-        adapter = new CategoryAdapter(categories, this);
+        adapter = new AccountAdapter(accounts, this);
         LinearLayoutManager manager = new LinearLayoutManager(this);
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(manager);
@@ -96,6 +82,7 @@ public class MainActivity extends BaseExitActivity implements OpsListener, Flexi
 
         return fab;
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,11 +109,6 @@ public class MainActivity extends BaseExitActivity implements OpsListener, Flexi
         super.onResume();
     }
 
-    @Override
-    public void onOpsEvent(IFlexible data, @OpsType int opsType) {
-
-    }
-
     private void snackSuccess(String msg) {
         TSnackbar snackbar = TSnackbar.make(recyclerView, msg, TSnackbar.LENGTH_LONG);
         View view = snackbar.getView();
@@ -140,26 +122,26 @@ public class MainActivity extends BaseExitActivity implements OpsListener, Flexi
     @Override
     public boolean onItemClick(View view, int position) {
         KLog.d();
-        Category category = adapter.getItem(position);
-        if (category == null) return false;
-        if (category.getCount() == 0)
-            SnackbarUtils.with(recyclerView)
-                    .setMessage(getString(R.string.category_click_tips))
-                    .showWarning();
-        else {
-            Intent intent = new Intent(this, AccountListActivity.class);
-            intent.putExtra(CreateAcountActivity.EXTRA_CATEGORY, category);
-            ActivityUtils.startActivity(intent);
-        }
-        return true;
+        return false;
     }
 
     @Override
     public void onItemLongClick(int position) {
         KLog.d();
-        Category category = adapter.getItem(position);
-        Intent intent = new Intent(this, CreateAcountActivity.class);
-        intent.putExtra(CreateAcountActivity.EXTRA_CATEGORY, category);
-        ActivityUtils.startActivity(intent);
+    }
+
+    @Override
+    public void onOpsEvent(IFlexible data, int opsType) {
+
+    }
+
+    @Override
+    public void onItemSwipe(int position, int direction) {
+        KLog.d(position + ", " + direction);
+    }
+
+    @Override
+    public void onActionStateChanged(RecyclerView.ViewHolder viewHolder, int actionState) {
+
     }
 }

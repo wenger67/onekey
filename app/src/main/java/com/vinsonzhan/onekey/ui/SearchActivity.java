@@ -49,6 +49,7 @@ import org.greenrobot.greendao.query.WhereCondition;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import eu.davidea.flexibleadapter.items.IFlexible;
 
 /**
  * project:onekey
@@ -57,7 +58,7 @@ import butterknife.ButterKnife;
  * author：Vinson.Zhan
  * comment：
  */
-public class SearchActivity extends BaseActivity implements OpsListener, CopyListener {
+public class SearchActivity extends BaseActivity implements OpsListener {
 
     @BindView(R.id.search_view) SearchView searchView;
     @BindView(R.id.search_result) ListView searchResult;
@@ -75,8 +76,6 @@ public class SearchActivity extends BaseActivity implements OpsListener, CopyLis
 
         adapter = new SearchResultAdapter(this, null);
         adapter.setListener(this);
-        adapter.setCopyListener(this);
-
         initView();
         searchResult.setAdapter(adapter);
     }
@@ -131,73 +130,71 @@ public class SearchActivity extends BaseActivity implements OpsListener, CopyLis
 
     }
 
-    @Override public void onDeleteAccount(Account account, int pos) {
-        KLog.d();
-        // update account table
-        App.getDaoSession().getAccountDao().delete(account);
-        // update mCurCategory table
-        String categoryName = account.getCategory();
-        CategoryDao categoryDao = App.getDaoSession().getCategoryDao();
-        Category category = categoryDao.queryBuilder().where(CategoryDao.Properties.Name.eq
-                (categoryName)).unique();
-        category.setCount(category.getCount() - 1);
-        categoryDao.update(category);
-        // update ui
+//    @Override public void onDeleteAccount(Account account, int pos) {
+//        KLog.d();
+//        // update account table
+//        App.getDaoSession().getAccountDao().delete(account);
+//        // update mCurCategory table
+//        String categoryName = account.getCategory();
+//        CategoryDao categoryDao = App.getDaoSession().getCategoryDao();
+//        Category category = categoryDao.queryBuilder().where(CategoryDao.Properties.Name.eq
+//                (categoryName)).unique();
+//        category.setCount(category.getCount() - 1);
+//        categoryDao.update(category);
+//        // update ui
+//
+//        View view = searchResult.getChildAt(pos);
+//        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1, 0);
+//        objectAnimator.setDuration(300);
+//        objectAnimator.start();
+//
+//        adapter.swapCursor(getCursor(curStr));
+//    }
 
-        View view = searchResult.getChildAt(pos);
-        ObjectAnimator objectAnimator = ObjectAnimator.ofFloat(view, "scaleX", 1, 0);
-        objectAnimator.setDuration(300);
-        objectAnimator.start();
+//    @Override public void onModifyAccount(Account account, int pos) {
+//        KLog.d();
+//        Intent intent = new Intent(this, CreateAcountActivity.class);
+//        intent.putExtra(CreateAcountActivity.EXTRA_ACCOUNT, account);
+//        intent.putExtra(CreateAcountActivity.EXTRA_CATEGORY,
+//                DataUtil.getCategoryByName(account.getCategory()));
+//        ActivityUtils.startActivity(intent);
+//
+//        // handle result
+//    }
 
-        adapter.swapCursor(getCursor(curStr));
-    }
-
-    @Override public void onModifyAccount(Account account, int pos) {
-        KLog.d();
-        Intent intent = new Intent(this, CreateAcountActivity.class);
-        intent.putExtra(CreateAcountActivity.EXTRA_ACCOUNT, account);
-        intent.putExtra(CreateAcountActivity.EXTRA_CATEGORY,
-                DataUtil.getCategoryByName(account.getCategory()));
-        ActivityUtils.startActivity(intent);
-
-        // handle result
-    }
-
-    @Override public void onClickEmptyCategory(Category category, int pos) {
-        KLog.d();
-    }
-
-    @Override public void onLongClickCategory(Category category, int pos) {
-        KLog.d();
-    }
-
-    @Override public void onAccountTitleCopied(String title) {
-        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        cm.setText(title);
-        String msg = getResources().getString(R.string.create_title_hint) + getResources()
-                .getString(R.string.copy_success);
-        snackSuccess(msg);
-    }
-
-    @Override public void onAccountUsernameCopied(String username) {
-        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        cm.setText(username);
-        String msg = getResources().getString(R.string.create_account) + getResources()
-                .getString(R.string.copy_success);
-        snackSuccess(msg);
-    }
-
-    @Override public void onAccountPasswordCopied(String password) {
-        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        cm.setText(password);
-        String msg = getResources().getString(R.string.create_password) + getResources()
-                .getString(R.string.copy_success);
-        snackSuccess(msg);
-    }
-
-    @Override public void onAccountCommentCopied(String title) {
+    @Override
+    public void onOpsEvent(IFlexible data, int opsType) {
 
     }
+
+
+//    @Override public void onAccountTitleCopied(String title) {
+//        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//        cm.setText(title);
+//        String msg = getResources().getString(R.string.create_title_hint) + getResources()
+//                .getString(R.string.copy_success);
+//        snackSuccess(msg);
+//    }
+//
+//    @Override public void onAccountUsernameCopied(String username) {
+//        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//        cm.setText(username);
+//        String msg = getResources().getString(R.string.create_account) + getResources()
+//                .getString(R.string.copy_success);
+//        snackSuccess(msg);
+//    }
+//
+//    @Override public void onAccountPasswordCopied(String password) {
+//        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//        cm.setText(password);
+//        String msg = getResources().getString(R.string.create_password) + getResources()
+//                .getString(R.string.copy_success);
+//        snackSuccess(msg);
+//    }
+//
+//    @Override public void onAccountCommentCopied(String title) {
+//
+//    }
 
     private void snackSuccess(String msg) {
         TSnackbar snackbar = TSnackbar.make(searchResult, msg, TSnackbar.LENGTH_LONG);

@@ -19,6 +19,7 @@
                 android:layout_height="56dp"
                 android:background="@color/white"
                 android:paddingEnd="16dp"
+                android:descendantFocusability="blocksDescendants"
                 android:paddingStart="16dp">
 
     <com.beardedhen.androidbootstrap.AwesomeTextView
@@ -29,7 +30,8 @@
         android:layout_centerVertical="true"
         android:gravity="center"
         android:clickable="true"
-        android:textSize="24dp"/>
+        android:focusable="true"
+        android:textSize="24sp"/>
 
     <TextView
         android:id="@+id/category_name"
@@ -39,6 +41,7 @@
         android:layout_marginStart="16dp"
         android:layout_toEndOf="@id/category_icon"
         android:clickable="true"
+        android:focusable="true"
         android:textSize="@dimen/large_content"/>
 
     <TextView
@@ -48,6 +51,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:clickable="true"
+        android:focusable="true"
         android:textSize="14sp"/>
 
     <ImageView

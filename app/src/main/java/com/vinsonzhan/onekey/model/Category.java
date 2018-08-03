@@ -17,10 +17,14 @@ package com.vinsonzhan.onekey.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.view.View;
+import android.widget.TextView;
 
-import com.chad.library.adapter.base.entity.AbstractExpandableItem;
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.vinsonzhan.onekey.adapter.ExpandableItemAdapter;
+import com.beardedhen.androidbootstrap.AwesomeTextView;
+import com.beardedhen.androidbootstrap.BootstrapText;
+import com.vinsonzhan.onekey.App;
+import com.vinsonzhan.onekey.R;
+import com.vinsonzhan.onekey.adapter.ItemType;
 import com.vinsonzhan.onekey.common.DataChangeListener;
 
 import org.greenrobot.greendao.annotation.Entity;
@@ -28,6 +32,13 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Property;
 import org.greenrobot.greendao.annotation.Transient;
+
+import java.util.List;
+
+import eu.davidea.flexibleadapter.FlexibleAdapter;
+import eu.davidea.flexibleadapter.items.AbstractFlexibleItem;
+import eu.davidea.flexibleadapter.items.IFlexible;
+import eu.davidea.viewholders.FlexibleViewHolder;
 
 /**
  * project:onekey
@@ -37,12 +48,17 @@ import org.greenrobot.greendao.annotation.Transient;
  * comment：
  */
 @Entity
-public class Category extends AbstractExpandableItem<Account> implements MultiItemEntity,
-        Parcelable {
+public class Category extends AbstractFlexibleItem<Category.ViewHolder> implements Parcelable {
     public static final Creator<Category> CREATOR = new Creator<Category>() {
-        @Override public Category createFromParcel(Parcel source) {return new Category(source);}
+        @Override
+        public Category createFromParcel(Parcel source) {
+            return new Category(source);
+        }
 
-        @Override public Category[] newArray(int size) {return new Category[size];}
+        @Override
+        public Category[] newArray(int size) {
+            return new Category[size];
+        }
     };
     @Id(autoincrement = true)
     private Long id;
@@ -52,16 +68,11 @@ public class Category extends AbstractExpandableItem<Account> implements MultiIt
     private String icon;
     @Property(nameInDb = "CATEGORY_DEFAULT")
     private boolean isDefault;
+    @Property(nameInDb = "CATEGORY_COUNT")
     private int count;
-
-    public void setDataChangeListener(DataChangeListener dataChangeListener) {
-        this.dataChangeListener = dataChangeListener;
-    }
-
     // not store into db
     @Transient
     private DataChangeListener dataChangeListener;
-
 
     @Generated(hash = 381780247)
     public Category(Long id, String name, String icon, boolean isDefault, int count) {
@@ -77,12 +88,17 @@ public class Category extends AbstractExpandableItem<Account> implements MultiIt
     public Category() {
     }
 
+
     protected Category(Parcel in) {
         this.id = (Long) in.readValue(Long.class.getClassLoader());
         this.name = in.readString();
         this.icon = in.readString();
         this.isDefault = in.readByte() != 0;
         this.count = in.readInt();
+    }
+
+    public void setDataChangeListener(DataChangeListener dataChangeListener) {
+        this.dataChangeListener = dataChangeListener;
     }
 
     public Long getId() {
@@ -115,13 +131,17 @@ public class Category extends AbstractExpandableItem<Account> implements MultiIt
 
     // TODO: 2/6/18 long
     public void setCount(int count) {
-        if (this.count != count && dataChangeListener != null) {
+        if (this.count != count) {
             this.count = count;
+        }
+
+        if (dataChangeListener != null) {
             dataChangeListener.onDataChange(count);
         }
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return "Category{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
@@ -130,12 +150,9 @@ public class Category extends AbstractExpandableItem<Account> implements MultiIt
                 '}';
     }
 
-    @Override public int getItemType() {
-        return ExpandableItemAdapter.TYPE_CATEGORY;
-    }
-
-    @Override public int getLevel() {
-        return 0;
+    @Override
+    public int getItemViewType() {
+        return ItemType.TYPE_CATEGORY;
     }
 
     public boolean getIsDefault() {
@@ -146,13 +163,62 @@ public class Category extends AbstractExpandableItem<Account> implements MultiIt
         this.isDefault = isDefault;
     }
 
-    @Override public int describeContents() { return 0; }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
 
-    @Override public void writeToParcel(Parcel dest, int flags) {
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
         dest.writeValue(this.id);
         dest.writeString(this.name);
         dest.writeString(this.icon);
         dest.writeByte(this.isDefault ? (byte) 1 : (byte) 0);
         dest.writeInt(this.count);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category that = (Category) o;
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int getLayoutRes() {
+        return R.layout.item_category;
+    }
+
+    @Override
+    public ViewHolder createViewHolder(View view, FlexibleAdapter<IFlexible> adapter) {
+        return new ViewHolder(view, adapter);
+    }
+
+    @Override
+    public void bindViewHolder(FlexibleAdapter<IFlexible> adapter, ViewHolder holder, int
+            position, List<Object> payloads) {
+        Category category = (Category) adapter.getItem(position);
+        holder.icon.setBootstrapText(new BootstrapText.Builder(App.getInstance())
+                .addFontAwesomeIcon(category.getIcon()).build());
+
+        holder.name.setText(category.getName());
+
+        holder.count.setTextColor(category.getCount() > 0 ? App.getRes().getColor(R.color
+                .colorPrimaryDark) : App.getRes().getColor(R.color.bg));
+        holder.count.setText(String.valueOf(category.getCount()));
+    }
+
+    public static class ViewHolder extends FlexibleViewHolder {
+        AwesomeTextView icon;
+        TextView name;
+        TextView count;
+
+        private ViewHolder(View view, FlexibleAdapter adapter) {
+            super(view, adapter);
+            this.icon = view.findViewById(R.id.category_icon);
+            this.name = view.findViewById(R.id.category_name);
+            this.count = view.findViewById(R.id.category_count);
+        }
     }
 }

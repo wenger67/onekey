@@ -55,14 +55,9 @@ public class MockDataUtil {
             accounts.add(account);
         }
         App.getDaoSession().getAccountDao().insertInTx(accounts);
-        WhereCondition whereCondition = AccountDao.Properties.Category.eq(Constants.CATAGORY_MAP
-                .get(Constants.EMAIL));
-        long count = App.getDaoSession().getAccountDao().queryBuilder().where(whereCondition)
-                .count();
         Category category = DataUtil.getCategoryByName(Constants.CATAGORY_MAP
                 .get(Constants.EMAIL));
-        KLog.d(count);
-        category.setCount((int)count);
+        category.setCount(EMAIL_COUNT);
         App.getDaoSession().getCategoryDao().update(category);
 
 
@@ -78,14 +73,9 @@ public class MockDataUtil {
             banks.add(account);
         }
         App.getDaoSession().getAccountDao().insertInTx(banks);
-        WhereCondition whereCondition1 = AccountDao.Properties.Category.eq(Constants.CATAGORY_MAP
-                .get(Constants.BANK));
-        long count1 = App.getDaoSession().getAccountDao().queryBuilder().where(whereCondition1)
-                .count();
         Category category1 = DataUtil.getCategoryByName(Constants.CATAGORY_MAP
                 .get(Constants.BANK));
-        KLog.d(count1);
-        category1.setCount((int)count1);
+        category1.setCount(BANK_COUNT);
         App.getDaoSession().getCategoryDao().update(category1);
 
 
@@ -101,14 +91,9 @@ public class MockDataUtil {
             games.add(account);
         }
         App.getDaoSession().getAccountDao().insertInTx(games);
-        WhereCondition whereCondition2 = AccountDao.Properties.Category.eq(Constants.CATAGORY_MAP
-                .get(Constants.GAME));
-        long count2 = App.getDaoSession().getAccountDao().queryBuilder().where(whereCondition2)
-                .count();
         Category category2 = DataUtil.getCategoryByName(Constants.CATAGORY_MAP
                 .get(Constants.GAME));
-        KLog.d(count2);
-        category2.setCount((int)count2);
+        category2.setCount(GAME_COUNT);
         App.getDaoSession().getCategoryDao().update(category2);
 
 
@@ -124,14 +109,9 @@ public class MockDataUtil {
             maps.add(account);
         }
         App.getDaoSession().getAccountDao().insertInTx(maps);
-        WhereCondition whereCondition3 = AccountDao.Properties.Category.eq(Constants.CATAGORY_MAP
-                .get(Constants.MAP));
-        long count3 = App.getDaoSession().getAccountDao().queryBuilder().where(whereCondition3)
-                .count();
         Category category3 = DataUtil.getCategoryByName(Constants.CATAGORY_MAP
                 .get(Constants.MAP));
-        KLog.d(count3);
-        category3.setCount((int)count3);
+        category3.setCount(MAP_COUNT);
         App.getDaoSession().getCategoryDao().update(category3);
 
         ArrayList<Account> shops = new ArrayList<>();
@@ -146,14 +126,10 @@ public class MockDataUtil {
             shops.add(account);
         }
         App.getDaoSession().getAccountDao().insertInTx(shops);
-        WhereCondition whereCondition4 = AccountDao.Properties.Category.eq(Constants.CATAGORY_MAP
-                .get(Constants.SHOPPING));
-        long count4 = App.getDaoSession().getAccountDao().queryBuilder().where(whereCondition4)
-                .count();
         Category category4 = DataUtil.getCategoryByName(Constants.CATAGORY_MAP
                 .get(Constants.SHOPPING));
-        KLog.d(count4);
-        category4.setCount((int)count4);
+        category4.setCount(SHOP_COUNT);
+        KLog.d(category4.toString());
         App.getDaoSession().getCategoryDao().update(category4);
     }
 

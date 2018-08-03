@@ -15,8 +15,7 @@
 
 package com.vinsonzhan.onekey.model;
 
-import com.chad.library.adapter.base.entity.MultiItemEntity;
-import com.vinsonzhan.onekey.adapter.ExpandableItemAdapter;
+import com.vinsonzhan.onekey.adapter.ItemType;
 
 /**
  * project:onekey
@@ -30,7 +29,8 @@ public class FootLine extends Account {
     public FootLine() {
     }
 
-    @Override public int getItemType() {
-        return ExpandableItemAdapter.TYPE_ACCOUNT_FOOT;
+    @Override
+    public int getItemViewType() {
+        return ItemType.TYPE_ACCOUNT_FOOT;
     }
 }

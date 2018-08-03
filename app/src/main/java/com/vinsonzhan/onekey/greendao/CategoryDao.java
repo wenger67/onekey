@@ -28,7 +28,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
         public final static Property Name = new Property(1, String.class, "name", false, "CATEGORY_NAME");
         public final static Property Icon = new Property(2, String.class, "icon", false, "CATEGORY_ICON");
         public final static Property IsDefault = new Property(3, boolean.class, "isDefault", false, "CATEGORY_DEFAULT");
-        public final static Property Count = new Property(4, int.class, "count", false, "COUNT");
+        public final static Property Count = new Property(4, int.class, "count", false, "CATEGORY_COUNT");
     }
 
 
@@ -48,7 +48,7 @@ public class CategoryDao extends AbstractDao<Category, Long> {
                 "\"CATEGORY_NAME\" TEXT," + // 1: name
                 "\"CATEGORY_ICON\" TEXT," + // 2: icon
                 "\"CATEGORY_DEFAULT\" INTEGER NOT NULL ," + // 3: isDefault
-                "\"COUNT\" INTEGER NOT NULL );"); // 4: count
+                "\"CATEGORY_COUNT\" INTEGER NOT NULL );"); // 4: count
     }
 
     /** Drops the underlying database table. */

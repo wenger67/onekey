@@ -15,8 +15,11 @@
 
 package com.vinsonzhan.onekey.common;
 
+import com.vinsonzhan.onekey.adapter.OpsType;
 import com.vinsonzhan.onekey.model.Account;
 import com.vinsonzhan.onekey.model.Category;
+
+import eu.davidea.flexibleadapter.items.IFlexible;
 
 /**
  * project:onekey
@@ -26,11 +29,5 @@ import com.vinsonzhan.onekey.model.Category;
  * comment：
  */
 public interface OpsListener {
-    void onDeleteAccount(Account account, int pos);
-
-    void onModifyAccount(Account account, int pos);
-
-    void onClickEmptyCategory(Category category, int pos);
-
-    void onLongClickCategory(Category category, int pos);
+    void onOpsEvent(IFlexible data, @OpsType int opsType);
 }

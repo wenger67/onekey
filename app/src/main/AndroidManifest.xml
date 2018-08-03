@@ -36,6 +36,7 @@
         <activity android:name=".ui.CreateAcountActivity"/>
         <activity android:name=".ui.SettingActivity"/>
         <activity android:name=".ui.CreateCategoryActivity"/>
+        <activity android:name=".ui.AccountListActivity"/>
     </application>
 
 </manifest>

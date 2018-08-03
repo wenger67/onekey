@@ -102,7 +102,7 @@ public class SearchResultAdapter extends CursorAdapter {
         viewHolder.mod.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (listener != null)
-                    listener.onModifyAccount(account, -1);
+                    listener.onOpsEvent(account, OpsType.OPS_MODIFY);
             }
         });
     }
@@ -149,7 +149,7 @@ public class SearchResultAdapter extends CursorAdapter {
                     @Override public void onClick(View v) {
                         KLog.d("click delete confirm");
                         if (listener != null)
-                            listener.onDeleteAccount(account, -1);
+                            listener.onOpsEvent(account, OpsType.OPS_DELETE);
                     }
                 });
 
