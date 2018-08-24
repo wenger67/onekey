@@ -39,9 +39,6 @@ import com.vinsonzhan.onekey.common.CopyListener;
 import com.vinsonzhan.onekey.common.OpsListener;
 import com.vinsonzhan.onekey.greendao.AccountDao;
 import com.vinsonzhan.onekey.model.Account;
-import com.vinsonzhan.onekey.swipewithcallback.EasySwipeMenuLayout;
-import com.vinsonzhan.onekey.swipewithcallback.State;
-import com.vinsonzhan.onekey.swipewithcallback.SwipeStateChangeListener;
 import com.vinsonzhan.onekey.util.DataUtil;
 
 /**
@@ -71,7 +68,7 @@ public class SearchResultAdapter extends CursorAdapter {
     @Override public View newView(Context context, Cursor cursor, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context
                 .LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.item_account_swipable, parent, false);
+        View view = inflater.inflate(R.layout.item_account, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
         view.setTag(viewHolder);
         return view;
@@ -152,19 +149,6 @@ public class SearchResultAdapter extends CursorAdapter {
                             listener.onOpsEvent(account, OpsType.OPS_DELETE);
                     }
                 });
-
-                EasySwipeMenuLayout accountItemView = (EasySwipeMenuLayout) viewHolder.root;
-
-                accountItemView.setListener(new SwipeStateChangeListener() {
-                    @Override public void onStateChange(State newState, State oldState) {
-                        KLog.d("new: " + newState + ", old: " + oldState);
-                        if (newState == State.CLOSE && oldState == State.RIGHTOPEN) {
-                            biggerAnim.reverse();
-                            smallAnim.reverse();
-                            del.setText(App.getRes().getString(R.string.account_del));
-                        }
-                    }
-                });
             }
 
             @Override public void onAnimationCancel(Animator animation) {
@@ -216,8 +200,8 @@ public class SearchResultAdapter extends CursorAdapter {
 
         public ViewHolder(View view) {
             this.root = view;
-            this.del = view.findViewById(R.id.account_del);
-            this.mod = view.findViewById(R.id.account_mod);
+//            this.del = view.findViewById(R.id.account_del);
+//            this.mod = view.findViewById(R.id.account_mod);
 //            this.titleIcon = view.findViewById(R.id.account_title_icon);
             this.title = view.findViewById(R.id.account_title_tv);
             this.userNameIcon = view.findViewById(R.id.account_username_icon);

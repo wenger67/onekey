@@ -68,6 +68,8 @@ public class AccountListActivity extends BaseActivity implements OpsListener, Fl
         recyclerView.setHasFixedSize(false);
         recyclerView.setLayoutManager(manager);
         recyclerView.setAdapter(adapter);
+        adapter.setSwipeEnabled(true);
+        adapter.addListener(this);
     }
 
     private AwesomeTextView getIcon(CharSequence icon, int size, int color) {
