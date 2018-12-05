@@ -36,11 +36,11 @@ import java.util.Random;
  * comment：
  */
 public class MockDataUtil {
-    public static int BANK_COUNT = 123;
-    public static int EMAIL_COUNT = 1000;
-    public static int GAME_COUNT = 30;
-    public static int MAP_COUNT = 5;
-    public static int SHOP_COUNT = 1;
+    private static int BANK_COUNT = 123;
+    private static int EMAIL_COUNT = 90;
+    private static int GAME_COUNT = 30;
+    private static int MAP_COUNT = 5;
+    private static int SHOP_COUNT = 26;
 
     public static void insertFackAccount(){
         ArrayList<Account> accounts = new ArrayList<>();
@@ -133,16 +133,16 @@ public class MockDataUtil {
         App.getDaoSession().getCategoryDao().update(category4);
     }
 
-    public static final String allChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static final String letterChar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static final String numberChar = "0123456789";
+    private static final String allChar = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String letterChar = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String numberChar = "0123456789";
 
     /**
      * 产生长度为length的随机字符串（包括字母和数字）
      * @param length
      * @return
      */
-    public static String generateString(int length) {
+    private static String generateString(int length) {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
@@ -155,7 +155,7 @@ public class MockDataUtil {
      * @param length
      * @return
      */
-    public static String generateMixString(int length) {
+    private static String generateMixString(int length) {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
@@ -180,7 +180,7 @@ public class MockDataUtil {
         return generateMixString(length).toUpperCase();
     }
 
-    public static String generateNumber(int length) {
+    private static String generateNumber(int length) {
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for (int i = 0; i < length; i++) {
@@ -189,7 +189,7 @@ public class MockDataUtil {
         return sb.toString();
     }
 
-    public static String getRandomChinese(int length) {
+    private static String getRandomChinese(int length) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < length; i ++) {
             sb.append((char) (0x4e00 + (int) (Math.random() * (0x9fa5 - 0x4e00 + 1))));

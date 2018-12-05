@@ -21,13 +21,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
-import com.beardedhen.androidbootstrap.BootstrapText;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.socks.library.KLog;
 import com.vinsonzhan.onekey.R;
@@ -49,7 +49,8 @@ public class CreateLockActivity extends BaseExitActivity {
 
     @BindView(R.id.profile_image) BootstrapCircleThumbnail image;
     @BindView(R.id.profile_name) AwesomeTextView name;
-    @BindView(R.id.tips) AwesomeTextView tips;
+    @BindView(R.id.tips)
+    TextView tips;
 
     @BindView(R.id.pattern_lock_view) PatternLockView lockView;
     
@@ -81,27 +82,38 @@ public class CreateLockActivity extends BaseExitActivity {
         public void onComplete(List<PatternLockView.Dot> pattern) {
             String key = PatternLockUtils.patternToString(lockView, pattern);
             KLog.d("Pattern complete: " + key);
+
+            if (pattern.size() < 4) {
+                KLog.d("lock key show large that 4 dot!");
+                // draw again
+                lockView.clearPattern();
+                tips.setText(R.string.tips_invalid_redraw);
+                tips.setTextColor(getResources().getColor(R.color.warning));
+                firstLock = "";
+                return;
+            }
+
             if (firstLock.isEmpty()) {
                 firstLock = key;
                 // draw again
                 lockView.clearPattern();
-                tips.setBootstrapText(new BootstrapText.Builder(CreateLockActivity.this).addText(getString(R.string
-                        .draw_secret_again)).build());
+                tips.setText(R.string.tips_draw_the_key_again);
+                tips.setTextColor(getResources().getColor(R.color.colorPrimary));
             } else if (firstLock.equals(key)) {
                 KLog.d("Set lock success");
                 PreferenceUtils.saveLockKey(CreateLockActivity.this, key);
                 // jump
                 lockView.clearPattern();
-                tips.setBootstrapText(new BootstrapText.Builder(CreateLockActivity.this).addText(getString(R.string
-                        .go_to_login)).build());
+                tips.setText(R.string.go_to_login);
+                tips.setTextColor(getResources().getColor(R.color.success));
                 ActivityUtils.startActivity(new Intent(CreateLockActivity.this, LoginActivity.class));
                 CreateLockActivity.this.finish();
             } else {
                 KLog.d("Set lock failed");
                 // draw again
                 lockView.clearPattern();
-                tips.setBootstrapText(new BootstrapText.Builder(CreateLockActivity.this).addText(getString(R.string
-                        .draw_secret_again)).build());
+                tips.setText(R.string.tips_incorrect_redraw);
+                tips.setTextColor(getResources().getColor(R.color.warning));
                 firstLock = "";
             }
 
@@ -114,8 +126,8 @@ public class CreateLockActivity extends BaseExitActivity {
     };
 
     private void initView() {
-        tips.setBootstrapText(new BootstrapText.Builder(this).addText(getString(R.string
-                .draw_secret)).build());
+        tips.setText(R.string.tips_set_draw_secret);
+        tips.setTextColor(getResources().getColor(R.color.colorPrimary));
         tips.setVisibility(View.VISIBLE);
 
         lockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);

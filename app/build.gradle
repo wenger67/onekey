@@ -27,10 +27,10 @@ android {
         }
     }
     compileSdkVersion 28
-    buildToolsVersion "28.0.1"
+    buildToolsVersion "28.0.3"
     defaultConfig {
         applicationId "com.vinsonzhan.onekey"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -48,7 +48,7 @@ android {
             renderscriptOptimLevel 3
             zipAlignEnabled true
             proguardFile '/home/vinsonzhan/dev/onekey/app/proguard-rules.pro'
-            applicationIdSuffix 'release'
+            applicationIdSuffix '.release'
             versionNameSuffix 'release'
         }
         debug {
@@ -60,7 +60,7 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             proguardFile '/home/vinsonzhan/dev/onekey/app/proguard-rules.pro'
-            applicationIdSuffix 'debug'
+            applicationIdSuffix '.debug'
             versionNameSuffix 'debug'
         }
     }
@@ -80,9 +80,11 @@ dependencies {
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
-    implementation 'com.android.support:recyclerview-v7:28.0.0-alpha3'
-    implementation 'com.android.support:design:28.0.0-alpha3'
+    implementation 'com.android.support:appcompat-v7:28.0.0-beta01'
+    implementation 'com.android.support:support-v4:28.0.0-beta01'
+    implementation 'com.android.support:support-media-compat:28.0.0-beta01'
+    implementation 'com.android.support:recyclerview-v7:28.0.0-beta01'
+    implementation 'com.android.support:design:28.0.0-beta01'
     testImplementation 'junit:junit:4.12'
     implementation 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

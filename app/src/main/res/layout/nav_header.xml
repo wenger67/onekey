@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:contentDescription="@null"
-        android:background="@color/bootstrap_brand_info"
+        android:background="@color/colorPrimary"
         android:scaleType="centerCrop"/>
 
     <ImageView
@@ -17,13 +17,13 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="36dp"
         android:padding="8dp"
-        android:src="@color/bootstrap_brand_primary"/>
+        android:src="@color/colorPrimaryDark"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:padding="16dp"
-        android:text="Jaeger"
+        android:text="Vinson"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
 </FrameLayout>

@@ -24,6 +24,7 @@
         <menu>
             <item
                 android:id="@+id/nav_share"
+                android:checkable="true"
                 android:icon="@color/design_default_color_primary"
                 android:title="Share"/>
             <item

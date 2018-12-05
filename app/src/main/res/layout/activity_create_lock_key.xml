@@ -40,7 +40,7 @@
         android:fontFamily="sans-serif-thin"
         android:gravity="center"
         android:maxLines="1"
-        android:text="Welcome"
+        android:text="@string/welcome"
         android:textColor="@color/white"
         android:textSize="34sp"/>
 
@@ -55,7 +55,7 @@
         app:dotAnimationDuration="150"
         app:dotCount="3"/>
 
-    <com.beardedhen.androidbootstrap.AwesomeTextView
+    <TextView
         android:id="@+id/tips"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

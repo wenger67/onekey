@@ -67,12 +67,12 @@ public class PreferenceUtils {
         editor.apply();
     }
 
-    public static boolean isMockDataInit(Context c) {
+    public static boolean hasMockData(Context c) {
         SharedPreferences sp = c.getSharedPreferences(PREF_DB, Context.MODE_PRIVATE);
         return sp.getBoolean(PREF_DB_MOCK, false);
     }
 
-    public static void saveMockDataInit(Context context) {
+    public static void saveMockDataFlag(Context context) {
         SharedPreferences sp = context.getSharedPreferences(PREF_DB, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putBoolean(PREF_DB_MOCK, true);

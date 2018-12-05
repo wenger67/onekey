@@ -5,13 +5,15 @@
     <string name="nav_drawer_close" translatable="false">close drawer</string>
 
     <!-- start page -->
-    <string name="start_input_pw_hint">Please input password</string>
+    <string name="tips_start_draw_key">Please start draw key</string>
     <string name="tips_create_lock_key">Please Create Lock Key</string>
-    <string name="draw_secret">Please Draw Secret</string>
-    <string name="draw_secret_again">Please Draw The Same Secret Again</string>
-    <string name="go_to_login">Goto login {fa_sign_in}</string>
-    <string name="pattern_right">Draw the right pattern {fa_hand_o_right}</string>
-    <string name="pattern_error">Draw the wrong pattern, try again</string>
+    <string name="tips_set_draw_secret">Please Set Draw Secret</string>
+    <string name="tips_draw_the_key_again">Please Draw The Key Again</string>
+    <string name="tips_incorrect_redraw">The key not euqal to the last one, Please redraw!</string>
+    <string name="tips_invalid_redraw">The key should more than 4 dot, Please redraw!</string>
+    <string name="go_to_login">Goto login</string>
+    <string name="tips_draw_key_correct">Draw the right pattern}</string>
+    <string name="tips_draw_key_wrong">Draw the wrong pattern, try again</string>
 
     <!-- category res-->
     <string name="category_email">Email Account</string>
@@ -45,6 +47,8 @@
     <string name="create_save">Save</string>
     <string name="exceed_length_tip">The input text has exceeded 32 letter</string>
     <string name="not_complete_tip">The input can not be empty</string>
+    <string name="welcome">Welcome</string>
+    <string name="draw_key">Draw Key</string>
     <!-- create account end -->
 
     <!-- account ops-->

@@ -18,13 +18,15 @@
     <string name="app_name">密码本</string>
 
     <!-- start page -->
-    <string name="start_input_pw_hint">请绘制密码</string>
+    <string name="tips_start_draw_key">请绘制密码</string>
     <string name="tips_create_lock_key">请创建绘制密码</string>
-    <string name="draw_secret">请绘制密码</string>
-    <string name="draw_secret_again">请再次绘制密码</string>
-    <string name="go_to_login">进行登录 {fa_sign_in}</string>
-    <string name="pattern_right">绘制密码正确 {fa_hand_o_right}</string>
-    <string name="pattern_error">绘制密码错误，请重新绘制</string>
+    <string name="tips_set_draw_secret">请设置九宫格密码</string>
+    <string name="tips_draw_the_key_again">请再次绘制密码</string>
+    <string name="tips_incorrect_redraw">绘制密码不同于上一次，请重绘!</string>
+    <string name="tips_invalid_redraw">绘制密码不得少于4个点，请重绘!</string>
+    <string name="go_to_login">进行登录</string>
+    <string name="tips_draw_key_correct">绘制密码正确</string>
+    <string name="tips_draw_key_wrong">绘制密码错误，请重新绘制</string>
 
     <!-- category res-->
     <string name="category_email">邮件账户</string>

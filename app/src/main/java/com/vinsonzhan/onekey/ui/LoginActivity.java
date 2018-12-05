@@ -21,13 +21,13 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.andrognito.patternlockview.PatternLockView;
 import com.andrognito.patternlockview.listener.PatternLockViewListener;
 import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
-import com.beardedhen.androidbootstrap.BootstrapText;
 import com.beardedhen.androidbootstrap.api.defaults.DefaultBootstrapBrand;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.socks.library.KLog;
@@ -52,7 +52,8 @@ public class LoginActivity extends BaseExitActivity {
 
     @BindView(R.id.profile_image) BootstrapCircleThumbnail image;
     @BindView(R.id.profile_name) AwesomeTextView name;
-    @BindView(R.id.tips) AwesomeTextView tips;
+    @BindView(R.id.tips)
+    TextView tips;
     @BindView(R.id.pattern_lock_view) PatternLockView lockView;
 
     int errorCount = 0;
@@ -82,11 +83,22 @@ public class LoginActivity extends BaseExitActivity {
         public void onComplete(List<PatternLockView.Dot> pattern) {
             String key = PatternLockUtils.patternToString(lockView, pattern);
             KLog.d("Pattern complete: " + key);
+
+            if (pattern.size() < 4) {
+                KLog.d("lock key show large that 4 dot!");
+                // draw again
+                lockView.clearPattern();
+                tips.setText(R.string.tips_invalid_redraw);
+                tips.setTextColor(getResources().getColor(R.color.warning));
+                return;
+            }
+
             if (PreferenceUtils.compareLockKey(LoginActivity.this, key)) {
                 KLog.d("login success");
                 // jump
                 lockView.clearPattern();
-                tips.setMarkdownText(getString(R.string.pattern_right));
+                tips.setText(R.string.tips_draw_key_correct);
+                tips.setTextColor(getResources().getColor(R.color.success));
                 tips.setVisibility(View.VISIBLE);
                 switch (App.getInstance().getStartMode()) {
                     case StartMode.START_NORMAL:
@@ -105,12 +117,12 @@ public class LoginActivity extends BaseExitActivity {
                 errorCount ++;
                 lockView.clearPattern();
                 // TODO: 2/6/18 lock app if failed more than 5 times
-                tips.setBootstrapText(new BootstrapText.Builder(LoginActivity.this).addText(getString(R.string
-                        .pattern_error)).build());
+                tips.setText(getString(R.string.tips_draw_key_wrong));
+                tips.setVisibility(View.VISIBLE);
                 if (errorCount == 2) {
-                    tips.setBootstrapBrand(DefaultBootstrapBrand.WARNING);
-                } else if (errorCount == 3)
-                    tips.setBootstrapBrand(DefaultBootstrapBrand.DANGER);
+                    tips.setTextColor(getResources().getColor(R.color.warning));
+                } else if (errorCount >= 3)
+                    tips.setTextColor(getResources().getColor(R.color.error));
 
             }
 
@@ -123,7 +135,8 @@ public class LoginActivity extends BaseExitActivity {
     };
 
     private void initView() {
-        tips.setMarkdownText(getString(R.string.start_input_pw_hint));
+        tips.setText(R.string.tips_start_draw_key);
+        tips.setTextColor(getResources().getColor(R.color.colorPrimary));
 
         lockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
         lockView.setInStealthMode(false);

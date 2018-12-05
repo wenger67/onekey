@@ -20,7 +20,9 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -73,6 +75,10 @@ public class App extends Application {
     @Override public void onCreate() {
         super.onCreate();
         INSTANCE = this;
+
+        if ("debug".equals(BuildConfig.BUILD_TYPE))
+            KLog.init(true);
+        else KLog.init(false);
 
         initDatabase();
         initListener();
@@ -147,9 +153,9 @@ public class App extends Application {
         }
 
 
-        if (!PreferenceUtils.isMockDataInit(this)) {
+        if (!PreferenceUtils.hasMockData(this)) {
             MockDataUtil.insertFackAccount();
-            PreferenceUtils.saveMockDataInit(this);
+            PreferenceUtils.saveMockDataFlag(this);
         }
 
 
