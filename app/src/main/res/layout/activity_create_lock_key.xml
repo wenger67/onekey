@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ /* ******************************* Copyright (c)*********************************\
   ~  **
   ~  ** (c) Copyright 2018,VinsonZhan, china, wuhan
@@ -14,54 +13,79 @@
   ~  */
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/mine_shaft"
-              android:orientation="vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <com.beardedhen.androidbootstrap.BootstrapCircleThumbnail
-        android:id="@+id/profile_image"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="104dp"
-        android:src="@drawable/img_no_avatar"
-        app:hasBorder="true"
-        />
-
-    <com.beardedhen.androidbootstrap.AwesomeTextView
-        android:id="@+id/profile_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="36dp"
-        android:fontFamily="sans-serif-thin"
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/colorPrimary"
         android:gravity="center"
-        android:maxLines="1"
-        android:text="@string/welcome"
+        android:text="@string/title_set_unlock_pattern"
         android:textColor="@color/white"
-        android:textSize="34sp"/>
+        android:textSize="@dimen/app_bar" />
+
+    <TextView
+        android:id="@+id/tips_title"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="128dp"
+        android:layout_marginEnd="60dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="@dimen/large_content" />
+
+    <TextView
+        android:id="@+id/tips_content"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_below="@id/tips_title"
+        android:layout_gravity="center"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:gravity="center"
+        android:textSize="@dimen/middle_title"
+        android:visibility="invisible" />
 
     <com.vinsonzhan.onekey.widget.patternlock.PatternLockView
         android:id="@+id/pattern_lock_view"
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
+        android:layout_below="@id/tips_content"
+        android:layout_centerHorizontal="true"
         app:aspectRatio="square"
         app:aspectRatioEnabled="true"
         app:dotAnimationDuration="150"
-        app:dotCount="3"/>
+        app:dotCount="3"
+        app:pathWidth="5dp"
+        app:correctStateColor="@color/colorPrimary"
+        app:normalStateColor="@color/gray" />
 
     <TextView
-        android:id="@+id/tips"
+        android:id="@+id/skip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:textSize="16sp"
-        android:visibility="invisible"/>
-</LinearLayout>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="24dp"
+        android:text="@string/skip"
+        android:textColor="@color/black"
+        android:textSize="@dimen/large_content" />
+
+    <TextView
+        android:id="@+id/reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="24dp"
+        android:text="@string/reset"
+        android:textColor="@color/black"
+        android:textSize="@dimen/large_content" />
+</RelativeLayout>

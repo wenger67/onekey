@@ -38,7 +38,7 @@
         android:layout_marginStart="16dp"
         android:gravity="center_vertical|start"/>
     <ImageView
-        android:background="@color/bg"
+        android:background="@color/bg_gray"
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 </LinearLayout>

@@ -17,14 +17,15 @@ package com.vinsonzhan.onekey.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.beardedhen.androidbootstrap.AwesomeTextView;
-import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.socks.library.KLog;
 import com.vinsonzhan.onekey.R;
@@ -47,26 +48,29 @@ import butterknife.ButterKnife;
  */
 public class CreateLockActivity extends BaseExitActivity {
 
-    @BindView(R.id.profile_image) BootstrapCircleThumbnail image;
-    @BindView(R.id.profile_name) AwesomeTextView name;
-    @BindView(R.id.tips)
-    TextView tips;
-
+    private static final int MSG_CLEAR_PATTERN = 1;
+    @BindView(R.id.tips_title)
+    TextView tipsTitle;
+    @BindView(R.id.tips_content)
+    TextView tipsContent;
+    @BindView(R.id.skip)
+    TextView txtSkip;
+    @BindView(R.id.reset)
+    TextView txtReset;
     @BindView(R.id.pattern_lock_view)
     PatternLockView lockView;
-    
-    @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_create_lock_key);
-        ButterKnife.bind(this);
-        initView();
-    }
-
     String firstLock = "";
-
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_CLEAR_PATTERN:
+                    lockView.clearPattern();
+                    break;
+            }
+        }
+    };
     private PatternLockViewListener mPatternLockViewListener = new PatternLockViewListener() {
         @Override
         public void onStarted() {
@@ -77,6 +81,7 @@ public class CreateLockActivity extends BaseExitActivity {
         public void onProgress(List<PatternLockView.Dot> progressPattern) {
             KLog.d("Pattern progress: " +
                     PatternLockUtils.patternToString(lockView, progressPattern));
+            tipsTitle.setText(getString(R.string.tips_draw_down));
         }
 
         @Override
@@ -86,38 +91,30 @@ public class CreateLockActivity extends BaseExitActivity {
 
             if (pattern.size() < 4) {
                 KLog.d("lock key show large that 4 dot!");
-                // draw again
-                lockView.clearPattern();
-                tips.setText(R.string.tips_invalid_redraw);
-                tips.setTextColor(getResources().getColor(R.color.warning));
-                firstLock = "";
+                tipsTitle.setText(R.string.tips_error_draw_less);
+                lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
                 return;
             }
 
             if (firstLock.isEmpty()) {
                 firstLock = key;
-                // draw again
-                lockView.clearPattern();
-                tips.setText(R.string.tips_draw_the_key_again);
-                tips.setTextColor(getResources().getColor(R.color.colorPrimary));
+                tipsTitle.setText(R.string.tips_draw_again);
+                lockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
+                handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
             } else if (firstLock.equals(key)) {
-                KLog.d("Set lock success");
+                KLog.d("match");
                 PreferenceUtils.setUnlockPattern(key);
-                // jump
                 lockView.clearPattern();
-                tips.setText(R.string.go_to_login);
-                tips.setTextColor(getResources().getColor(R.color.success));
-                ActivityUtils.startActivity(new Intent(CreateLockActivity.this, LoginActivity.class));
+                ActivityUtils.startActivity(new Intent(CreateLockActivity.this, LoginActivity
+                        .class));
                 CreateLockActivity.this.finish();
             } else {
-                KLog.d("Set lock failed");
-                // draw again
-                lockView.clearPattern();
-                tips.setText(R.string.tips_incorrect_redraw);
-                tips.setTextColor(getResources().getColor(R.color.warning));
-                firstLock = "";
+                KLog.d("not match");
+                tipsTitle.setText(R.string.tip_error_draw_wrong);
+                lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
             }
-
         }
 
         @Override
@@ -126,10 +123,33 @@ public class CreateLockActivity extends BaseExitActivity {
         }
     };
 
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_create_lock_key);
+        ButterKnife.bind(this);
+        initView();
+        initEvent();
+    }
+
+    private void initEvent() {
+        txtReset.setClickable(true);
+        txtReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                lockView.clearPattern();
+                lockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
+                firstLock = "";
+                tipsTitle.setText(getString(R.string.tips_draw_pattern));
+            }
+        });
+    }
+
     private void initView() {
-        tips.setText(R.string.tips_set_draw_secret);
-        tips.setTextColor(getResources().getColor(R.color.colorPrimary));
-        tips.setVisibility(View.VISIBLE);
+        tipsTitle.setText(R.string.tips_draw_pattern);
 
         lockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
         lockView.setInStealthMode(false);

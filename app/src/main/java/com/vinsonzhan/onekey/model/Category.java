@@ -205,7 +205,7 @@ public class Category extends AbstractFlexibleItem<Category.ViewHolder> implemen
         holder.name.setText(category.getName());
 
         holder.count.setTextColor(category.getCount() > 0 ? App.getRes().getColor(R.color
-                .colorPrimaryDark) : App.getRes().getColor(R.color.bg));
+                .colorPrimaryDark) : App.getRes().getColor(R.color.bg_gray));
         holder.count.setText(String.valueOf(category.getCount()));
     }
 

@@ -168,9 +168,9 @@ public class SearchActivity extends BaseActivity implements OpsListener {
     }
 
 
-//    @Override public void onAccountTitleCopied(String title) {
+//    @Override public void onAccountTitleCopied(String txtTitle) {
 //        ClipboardManager cm = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-//        cm.setText(title);
+//        cm.setText(txtTitle);
 //        String msg = getResources().getString(R.string.create_title_hint) + getResources()
 //                .getString(R.string.copy_success);
 //        snackSuccess(msg);
@@ -192,7 +192,7 @@ public class SearchActivity extends BaseActivity implements OpsListener {
 //        snackSuccess(msg);
 //    }
 //
-//    @Override public void onAccountCommentCopied(String title) {
+//    @Override public void onAccountCommentCopied(String txtTitle) {
 //
 //    }
 

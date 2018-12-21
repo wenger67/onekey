@@ -73,7 +73,7 @@
         android:layout_height="1dp"
         android:layout_below="@id/account_username_icon"
         android:contentDescription="@null"
-        android:src="@color/bg"/>
+        android:src="@color/bg_gray"/>
 
     <com.beardedhen.androidbootstrap.AwesomeTextView
         android:id="@+id/account_password_icon"

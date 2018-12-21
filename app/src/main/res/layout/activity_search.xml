@@ -24,7 +24,7 @@
     <ListView
         android:id="@+id/search_result"
         android:layout_below="@id/search_view"
-        android:divider="@color/bg"
+        android:divider="@color/bg_gray"
         android:dividerHeight="8dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

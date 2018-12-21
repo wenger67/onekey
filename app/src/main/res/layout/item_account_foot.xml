@@ -22,6 +22,6 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="8dp"
-        android:background="@color/bg"
+        android:background="@color/bg_gray"
         android:contentDescription="@null"/>
 </LinearLayout>

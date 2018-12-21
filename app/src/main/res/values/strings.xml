@@ -4,6 +4,26 @@
     <string name="nav_drawer_open" translatable="false">open drawer</string>
     <string name="nav_drawer_close" translatable="false">close drawer</string>
 
+    <!--create unlock pattern start-->
+    <string name="title_set_unlock_pattern">Set password</string>
+    <string name="tips_draw_pattern">Please draw pattern,connect at least 4 points</string>
+    <string name="tips_draw_down">Release finger when done</string>
+    <string name="tips_error_draw_less">Connect at leaset 4 points.Please try again</string>
+    <string name="tips_draw_again">Please draw the unlock pattern again</string>
+    <string name="tip_error_draw_wrong">The two patterns do not match.Please try again</string>
+    <string name="skip">Skip</string>
+    <string name="reset">Reset</string>
+    <!--create unlock pattern end-->
+
+    <!--login in start-->
+    <string name="tips_login">Enter Fingerprint or Draw Pattern</string>
+    <string name="title_draw_pattern">Draw Pattern</string>
+    <string name="tips_fingerprint_error1_retry">Try again</string>
+    <string name="tips_fingerprint_error2_wrong">Cannot recognize your fingerprint</string>
+    <string name="tips_fingerprint_error3_disable">Your pattern is required to enable Fingerprint recognize</string>
+    <!--login in end-->
+
+
     <!-- start page -->
     <string name="tips_start_draw_key">Please start draw key</string>
     <string name="tips_create_lock_key">Please Create Lock Key</string>

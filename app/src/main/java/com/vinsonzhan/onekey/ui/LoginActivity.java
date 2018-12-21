@@ -17,14 +17,15 @@ package com.vinsonzhan.onekey.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.beardedhen.androidbootstrap.AwesomeTextView;
-import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.socks.library.KLog;
 import com.vinsonzhan.onekey.App;
@@ -48,11 +49,12 @@ import butterknife.ButterKnife;
  * comment：
  */
 public class LoginActivity extends BaseExitActivity {
+    @BindView(R.id.title) TextView title;
+    @BindView(R.id.tips_title) TextView tipsTitle;
+    @BindView(R.id.tips_content) TextView tipsContent;
+    @BindView(R.id.skip) TextView skip;
+    @BindView(R.id.reset) TextView reset;
 
-    @BindView(R.id.profile_image) BootstrapCircleThumbnail image;
-    @BindView(R.id.profile_name) AwesomeTextView name;
-    @BindView(R.id.tips)
-    TextView tips;
     @BindView(R.id.pattern_lock_view)
     PatternLockView lockView;
 
@@ -66,6 +68,19 @@ public class LoginActivity extends BaseExitActivity {
         ButterKnife.bind(this);
         initView();
     }
+    private static final int MSG_CLEAR_PATTERN = 1;
+
+    private Handler handler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case MSG_CLEAR_PATTERN:
+                    lockView.clearPattern();
+                    break;
+            }
+        }
+    };
 
     private PatternLockViewListener mPatternLockViewListener = new PatternLockViewListener() {
         @Override
@@ -77,6 +92,7 @@ public class LoginActivity extends BaseExitActivity {
         public void onProgress(List<PatternLockView.Dot> progressPattern) {
             KLog.d("Pattern progress: " +
                     PatternLockUtils.patternToString(lockView, progressPattern));
+            tipsTitle.setText(getString(R.string.tips_draw_down));
         }
 
         @Override
@@ -87,26 +103,25 @@ public class LoginActivity extends BaseExitActivity {
             if (pattern.size() < 4) {
                 KLog.d("lock key show large that 4 dot!");
                 // draw again
-                lockView.clearPattern();
-                tips.setText(R.string.tips_invalid_redraw);
-                tips.setTextColor(getResources().getColor(R.color.warning));
+                tipsTitle.setText(R.string.tips_error_draw_less);
+                tipsContent.setVisibility(View.INVISIBLE);
+                lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
                 return;
             }
 
             if (PreferenceUtils.compareUnlockPattern(key)) {
                 KLog.d("login success");
-                // jump
                 lockView.clearPattern();
-                tips.setText(R.string.tips_draw_key_correct);
-                tips.setTextColor(getResources().getColor(R.color.success));
-                tips.setVisibility(View.VISIBLE);
                 switch (App.getInstance().getStartMode()) {
                     case StartMode.START_NORMAL:
                     case StartMode.START_BACK_KEY_BG:
+                        // normal start , launch MainActivity
                         ActivityUtils.startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         LoginActivity.this.finish();
                         break;
                     case StartMode.START_HOME_KEY_BG:
+                        // home event backend, just resume
                         KLog.d(ActivityUtils.getTopActivity().getLocalClassName());
                         LoginActivity.this.finish();
                         break;
@@ -115,17 +130,28 @@ public class LoginActivity extends BaseExitActivity {
             } else {
                 KLog.d("login failed");
                 errorCount ++;
-                lockView.clearPattern();
                 // TODO: 2/6/18 lock app if failed more than 5 times
-                tips.setText(getString(R.string.tips_draw_key_wrong));
-                tips.setVisibility(View.VISIBLE);
-                if (errorCount == 2) {
-                    tips.setTextColor(getResources().getColor(R.color.warning));
-                } else if (errorCount >= 3)
-                    tips.setTextColor(getResources().getColor(R.color.error));
-
+                if (errorCount < 3) {
+                    tipsTitle.setText(getString(R.string.tips_fingerprint_error1_retry));
+                    lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                    handler.removeMessages(MSG_CLEAR_PATTERN);
+                    handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
+                } else if (errorCount < 5) {
+                    tipsTitle.setText(getString(R.string.title_draw_pattern));
+                    tipsContent.setVisibility(View.VISIBLE);
+                    tipsContent.setText(getString(R.string.tips_fingerprint_error2_wrong));
+                    lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                    handler.removeMessages(MSG_CLEAR_PATTERN);
+                    handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
+                } else {
+                    tipsTitle.setText(getString(R.string.title_draw_pattern));
+                    tipsContent.setVisibility(View.VISIBLE);
+                    tipsContent.setText(getString(R.string.tips_fingerprint_error3_disable));
+                    lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                    handler.removeMessages(MSG_CLEAR_PATTERN);
+                    handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
+                }
             }
-
         }
 
         @Override
@@ -135,8 +161,11 @@ public class LoginActivity extends BaseExitActivity {
     };
 
     private void initView() {
-        tips.setText(R.string.tips_start_draw_key);
-        tips.setTextColor(getResources().getColor(R.color.colorPrimary));
+        tipsTitle.setText(R.string.tips_login);
+        tipsContent.setVisibility(View.INVISIBLE);
+        title.setVisibility(View.GONE);
+        skip.setVisibility(View.GONE);
+        reset.setVisibility(View.GONE);
 
         lockView.setViewMode(PatternLockView.PatternViewMode.CORRECT);
         lockView.setInStealthMode(false);
