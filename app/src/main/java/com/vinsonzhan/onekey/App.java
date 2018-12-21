@@ -20,9 +20,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.beardedhen.androidbootstrap.TypefaceProvider;
 import com.blankj.utilcode.util.ActivityUtils;
@@ -76,7 +74,7 @@ public class App extends Application {
         super.onCreate();
         INSTANCE = this;
 
-        if ("debug".equals(BuildConfig.BUILD_TYPE))
+        if (BuildConfig.DEBUG)
             KLog.init(true);
         else KLog.init(false);
 
@@ -85,7 +83,7 @@ public class App extends Application {
         // use FontAwesome
         TypefaceProvider.registerDefaultIconSets();
         Utils.init(this);
-//        PreferenceUtils.clearLockKey(this);
+//        PreferenceUtils.resetUnlockPattern(this);
         startActivityDispatch();
     }
 
@@ -132,7 +130,7 @@ public class App extends Application {
         DaoMaster daoMaster = new DaoMaster(writableDatabase);
         daoSession = daoMaster.newSession();
 
-        if (!PreferenceUtils.isDbInitialed(this)) {
+        if (!PreferenceUtils.getDbInitialed()) {
             Object[] keys = Constants.CATAGORY_MAP.keySet().toArray();
             for (int i = 0; i <keys.length; i++) {
                 String key = (String) keys[i];
@@ -140,7 +138,7 @@ public class App extends Application {
                 Category cate = new Category((long) i, Constants.CATAGORY_MAP.get(key), key, flag, 0);
                 daoSession.insert(cate);
             }
-            PreferenceUtils.saveDbInitialed(this);
+            PreferenceUtils.setDbInitialed(true);
         } else if (getCategoryCount() == 0){
             KLog.d("Category table is empty, fill some data");
             Object[] keys = Constants.CATAGORY_MAP.keySet().toArray();
@@ -153,9 +151,9 @@ public class App extends Application {
         }
 
 
-        if (!PreferenceUtils.hasMockData(this)) {
+        if (!PreferenceUtils.getMockDataFlag()) {
             MockDataUtil.insertFackAccount();
-            PreferenceUtils.saveMockDataFlag(this);
+            PreferenceUtils.setMockDataFlag(true);
         }
 
 
@@ -169,7 +167,7 @@ public class App extends Application {
     }
 
     private void startActivityDispatch() {
-        if (PreferenceUtils.isLockExist(this)) {
+        if (PreferenceUtils.hasUnlockPattern()) {
             KLog.d("lock exist, goto login");
             Intent intent = new Intent(getInstance(), LoginActivity.class);
             ActivityUtils.startActivity(intent);

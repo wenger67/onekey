@@ -1,6 +1,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
+def getVersion() {
+    def cmd = 'git rev-list HEAD --first-parent --count'
+    return cmd.execute().text.trim().toInteger()
+}
+
+def buildTime() {
+    return new Date().format("yyyyMMdd.HHmmss", TimeZone.getTimeZone("UTC"))
+}
+
 android {
 
     Properties properties = new Properties()
@@ -29,7 +38,7 @@ android {
         applicationId "com.vinsonzhan.onekey"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 1
+        versionCode getVersion()
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -46,7 +55,6 @@ android {
             zipAlignEnabled true
             proguardFile '/home/vinsonzhan/dev/onekey/app/proguard-rules.pro'
             applicationIdSuffix '.release'
-            versionNameSuffix 'release'
         }
         debug {
             debuggable true
@@ -58,9 +66,22 @@ android {
             zipAlignEnabled false
             proguardFile '/home/vinsonzhan/dev/onekey/app/proguard-rules.pro'
             applicationIdSuffix '.debug'
-            versionNameSuffix 'debug'
         }
     }
+
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def outputFile = output.outputFile
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                if (variant.buildType.name.equals("release")) {
+                    outputFileName = "Onekey_${defaultConfig.versionName}.${getVersion()}_release.apk"
+                } else {
+                    outputFileName = "Onekey_${defaultConfig.versionName}.${getVersion()}_${buildTime()}_debug.apk"
+                }
+            }
+        }
+    }
+
 }
 
 greendao {

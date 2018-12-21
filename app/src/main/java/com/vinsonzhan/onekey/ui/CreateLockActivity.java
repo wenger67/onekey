@@ -102,7 +102,7 @@ public class CreateLockActivity extends BaseExitActivity {
                 tips.setTextColor(getResources().getColor(R.color.colorPrimary));
             } else if (firstLock.equals(key)) {
                 KLog.d("Set lock success");
-                PreferenceUtils.saveLockKey(CreateLockActivity.this, key);
+                PreferenceUtils.setUnlockPattern(key);
                 // jump
                 lockView.clearPattern();
                 tips.setText(R.string.go_to_login);

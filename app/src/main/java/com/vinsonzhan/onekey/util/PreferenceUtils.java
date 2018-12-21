@@ -1,14 +1,11 @@
 package com.vinsonzhan.onekey.util;
 
 import android.content.Context;
-import android.content.Loader;
 import android.content.SharedPreferences;
-import android.text.BoringLayout;
 
 import com.blankj.utilcode.util.EncryptUtils;
 import com.socks.library.KLog;
-
-import java.util.Arrays;
+import com.vinsonzhan.onekey.App;
 
 /**
  * Created by vinsonzhan on 1/18/18.
@@ -16,66 +13,62 @@ import java.util.Arrays;
 
 public class PreferenceUtils {
 
-    public static final String PREF_LOCK = "pref_lock";
-    public static final String PREF_LOCK_KEY = "lock_key";
-    public static final String PREF_LOCK_KEY_DEFAULT = "-1";
+    private static final String PREF_ONEKEY = "pref_onekey";
 
-    public static final String PREF_DB = "pref_db";
-    public static final String PREF_DB_INIT = "db_init";
-    public static final String PREF_DB_MOCK = "db_mock";
+    private static final String PREF_KEY_UNLOCK_PATTERN = "key_unlock_pattern";
+    private static final String PREF_VALUE_UNLOCK_PATTERN_DEFAULT = "-1";
 
-    public static boolean isLockExist(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(PREF_LOCK, Context.MODE_PRIVATE);
-        return !sp.getString(PREF_LOCK_KEY, PREF_LOCK_KEY_DEFAULT).equals(PREF_LOCK_KEY_DEFAULT);
+    private static final String PREF_KEY_DB_INIT = "key_db_init";
+    private static final String PREF_KEY_DB_MOCK = "key_db_mock";
+
+    private static SharedPreferences getSP() {
+        return App.getInstance().getSharedPreferences(PREF_ONEKEY, Context.MODE_PRIVATE);
     }
 
-    public static String readLockKey(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(PREF_LOCK, Context.MODE_PRIVATE);
-        return sp.getString(PREF_LOCK_KEY, PREF_LOCK_KEY_DEFAULT);
+    public static boolean hasUnlockPattern() {
+        return !getSP().getString(PREF_KEY_UNLOCK_PATTERN, PREF_VALUE_UNLOCK_PATTERN_DEFAULT).equals(PREF_VALUE_UNLOCK_PATTERN_DEFAULT);
     }
 
-    public static void saveLockKey(Context context, String key) {
-        SharedPreferences sp = context.getSharedPreferences(PREF_LOCK, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
+    public static String getUnlockPattern() {
+        return getSP().getString(PREF_KEY_UNLOCK_PATTERN, PREF_VALUE_UNLOCK_PATTERN_DEFAULT);
+    }
+
+    public static void setUnlockPattern(String key) {
+        SharedPreferences.Editor editor = getSP().edit();
         String sha512 = EncryptUtils.encryptSHA512ToString(key.getBytes());
         KLog.d(key + " --> " + sha512);
-        editor.putString(PREF_LOCK_KEY, sha512);
+        editor.putString(PREF_KEY_UNLOCK_PATTERN, sha512);
         editor.apply();
     }
 
-    public static boolean compareLockKey(Context context, String key) {
-        String sha512 = readLockKey(context);
+    public static boolean compareUnlockPattern(String key) {
+        String sha512 = getUnlockPattern();
         return sha512.equals(EncryptUtils.encryptSHA512ToString(key));
     }
 
-    public static void clearLockKey(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(PREF_LOCK, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.clear();
+    public static void resetUnlockPattern() {
+        SharedPreferences.Editor editor = getSP().edit();
+        editor.putString(PREF_KEY_UNLOCK_PATTERN, PREF_VALUE_UNLOCK_PATTERN_DEFAULT);
         editor.apply();
     }
 
-    public static boolean isDbInitialed(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(PREF_DB, Context.MODE_PRIVATE);
-        return sp.getBoolean(PREF_DB_INIT, false);
+    public static boolean getDbInitialed() {
+        return getSP().getBoolean(PREF_KEY_DB_INIT, false);
     }
 
-    public static void saveDbInitialed(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(PREF_DB, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(PREF_DB_INIT, true);
+    public static void setDbInitialed(boolean flag) {
+        SharedPreferences.Editor editor = getSP().edit();
+        editor.putBoolean(PREF_KEY_DB_INIT, flag);
         editor.apply();
     }
 
-    public static boolean hasMockData(Context c) {
-        SharedPreferences sp = c.getSharedPreferences(PREF_DB, Context.MODE_PRIVATE);
-        return sp.getBoolean(PREF_DB_MOCK, false);
+    public static boolean getMockDataFlag() {
+        return getSP().getBoolean(PREF_KEY_DB_MOCK, false);
     }
 
-    public static void saveMockDataFlag(Context context) {
-        SharedPreferences sp = context.getSharedPreferences(PREF_DB, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putBoolean(PREF_DB_MOCK, true);
+    public static void setMockDataFlag(boolean flag) {
+        SharedPreferences.Editor editor = getSP().edit();
+        editor.putBoolean(PREF_KEY_DB_MOCK, flag);
         editor.apply();
     }
 

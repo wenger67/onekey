@@ -25,7 +25,6 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
-import com.beardedhen.androidbootstrap.api.defaults.DefaultBootstrapBrand;
 import com.blankj.utilcode.util.ActivityUtils;
 import com.socks.library.KLog;
 import com.vinsonzhan.onekey.App;
@@ -94,7 +93,7 @@ public class LoginActivity extends BaseExitActivity {
                 return;
             }
 
-            if (PreferenceUtils.compareLockKey(LoginActivity.this, key)) {
+            if (PreferenceUtils.compareUnlockPattern(key)) {
                 KLog.d("login success");
                 // jump
                 lockView.clearPattern();
