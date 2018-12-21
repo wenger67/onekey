@@ -7,4 +7,24 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+
+    <declare-styleable name="PatternLockView">
+        <attr format="boolean" name="aspectRatioEnabled"/>
+        <attr format="enum" name="aspectRatio">
+            <enum name="square" value="0"/>
+            <enum name="width_bias" value="1"/>
+            <enum name="height_bias" value="2"/>
+        </attr>
+        <attr format="dimension" name="pathWidth"/>
+        <attr format="dimension" name="dotNormalSize"/>
+        <attr format="dimension" name="dotSelectedSize"/>
+        <attr format="integer" name="dotCount"/>
+        <attr format="color" name="normalStateColor"/>
+        <attr format="color" name="correctStateColor"/>
+        <attr format="color" name="wrongStateColor"/>
+        <attr format="integer" name="dotAnimationDuration"/>
+        <attr format="integer" name="pathEndAnimationDuration"/>
+    </declare-styleable>
+
 </resources>

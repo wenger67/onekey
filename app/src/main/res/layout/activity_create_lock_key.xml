@@ -44,7 +44,7 @@
         android:textColor="@color/white"
         android:textSize="34sp"/>
 
-    <com.andrognito.patternlockview.PatternLockView
+    <com.vinsonzhan.onekey.widget.patternlock.PatternLockView
         android:id="@+id/pattern_lock_view"
         android:layout_width="280dp"
         android:layout_height="280dp"

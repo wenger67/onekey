@@ -13,4 +13,6 @@
     <color name="error">#FFFF0000</color>
     <color name="message">#FFFFFFFF</color>
 
+    <color name="pomegranate">#f4511e</color>
+    <color name="white">#FFFF</color>
 </resources>

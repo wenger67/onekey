@@ -23,9 +23,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.andrognito.patternlockview.PatternLockView;
-import com.andrognito.patternlockview.listener.PatternLockViewListener;
-import com.andrognito.patternlockview.utils.PatternLockUtils;
 import com.beardedhen.androidbootstrap.AwesomeTextView;
 import com.beardedhen.androidbootstrap.BootstrapCircleThumbnail;
 import com.beardedhen.androidbootstrap.api.defaults.DefaultBootstrapBrand;
@@ -35,6 +32,9 @@ import com.vinsonzhan.onekey.App;
 import com.vinsonzhan.onekey.R;
 import com.vinsonzhan.onekey.common.StartMode;
 import com.vinsonzhan.onekey.util.PreferenceUtils;
+import com.vinsonzhan.onekey.widget.patternlock.PatternLockUtils;
+import com.vinsonzhan.onekey.widget.patternlock.PatternLockView;
+import com.vinsonzhan.onekey.widget.patternlock.PatternLockViewListener;
 
 import java.util.List;
 
@@ -54,7 +54,8 @@ public class LoginActivity extends BaseExitActivity {
     @BindView(R.id.profile_name) AwesomeTextView name;
     @BindView(R.id.tips)
     TextView tips;
-    @BindView(R.id.pattern_lock_view) PatternLockView lockView;
+    @BindView(R.id.pattern_lock_view)
+    PatternLockView lockView;
 
     int errorCount = 0;
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {

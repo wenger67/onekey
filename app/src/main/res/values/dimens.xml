@@ -22,4 +22,11 @@
     <dimen name="large_content">20sp</dimen>
     <dimen name="large_title">24sp</dimen>
     <integer name="max_letter">32</integer>
+
+    <!-- for widget pattern lock-->
+    <dimen name="pattern_lock_dot_selected_size">24dp</dimen>
+    <dimen name="pattern_lock_dot_size">10dp</dimen>
+    <dimen name="pattern_lock_path_width">3dp</dimen>
+    <!-- for widget pattern lock-->
+
 </resources>

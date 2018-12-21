@@ -13,13 +13,10 @@ android {
     def key_storePassword = properties.getProperty("storePassword")
 
     signingConfigs {
-        release {
-            keyAlias key_keyAlias
-            keyPassword key_keyPassword
-            storeFile file(key_keyFile)
-            storePassword key_storePassword
-        }
         debug {
+        }
+
+        release {
             keyAlias key_keyAlias
             keyPassword key_keyPassword
             storeFile file(key_keyFile)
@@ -90,7 +87,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation 'com.beardedhen:androidbootstrap:2.3.2'
     implementation 'com.github.zhaokaiqiang.klog:library:1.6.0'
-    implementation 'com.andrognito.patternlockview:patternlockview:1.0.0'
     implementation 'com.blankj:utilcode:1.12.0'
     implementation 'org.greenrobot:greendao:3.2.2'
     // add library

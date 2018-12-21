@@ -99,4 +99,13 @@
     <string name="category">Create Category</string>
     <!-- title end-->
 
+
+    <!-- for widget pattern lock-->
+    <string name="lib_name">PatternLockView</string>
+    <string name="message_pattern_cleared">Pattern cleared</string>
+    <string name="message_pattern_detected">Pattern drawing completed</string>
+    <string name="message_pattern_dot_added">Dot added to pattern</string>
+    <string name="message_pattern_started">Pattern drawing started</string>
+    <!-- for widget pattern lock-->
 </resources>
+
