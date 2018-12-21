@@ -62,11 +62,11 @@ public class PreferenceUtils {
         editor.apply();
     }
 
-    public static boolean getMockDataFlag() {
+    public static boolean hasMockData() {
         return getSP().getBoolean(PREF_KEY_DB_MOCK, false);
     }
 
-    public static void setMockDataFlag(boolean flag) {
+    public static void setHasMockData(boolean flag) {
         SharedPreferences.Editor editor = getSP().edit();
         editor.putBoolean(PREF_KEY_DB_MOCK, flag);
         editor.apply();

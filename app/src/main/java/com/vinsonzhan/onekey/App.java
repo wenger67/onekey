@@ -33,6 +33,7 @@ import com.vinsonzhan.onekey.model.Category;
 import com.vinsonzhan.onekey.ui.CreateLockActivity;
 import com.vinsonzhan.onekey.ui.LoginActivity;
 import com.vinsonzhan.onekey.util.Constants;
+import com.vinsonzhan.onekey.util.DataUtil;
 import com.vinsonzhan.onekey.util.MockDataUtil;
 import com.vinsonzhan.onekey.util.PreferenceUtils;
 
@@ -42,7 +43,13 @@ import java.util.List;
 
 import static com.vinsonzhan.onekey.common.StartMode.START_NORMAL;
 
-
+/**
+  * project:Onekey
+  * email: zhanwit@163.com
+  * time: 2018/12/21 14:06
+  * author: Vinson. Zhan
+  * comment:
+  */
 public class App extends Application {
 
     private static App INSTANCE;
@@ -74,17 +81,22 @@ public class App extends Application {
         super.onCreate();
         INSTANCE = this;
 
-        if (BuildConfig.DEBUG)
-            KLog.init(true);
-        else KLog.init(false);
-
+        KLog.init(BuildConfig.DEBUG);
         initDatabase();
+        if (BuildConfig.DEBUG && !PreferenceUtils.hasMockData())
+            initMockData();
+
         initListener();
         // use FontAwesome
         TypefaceProvider.registerDefaultIconSets();
         Utils.init(this);
-//        PreferenceUtils.resetUnlockPattern(this);
+
         startActivityDispatch();
+    }
+
+    private void initMockData(){
+        MockDataUtil.insertFackAccount();
+        PreferenceUtils.setHasMockData(true);
     }
 
     private void initListener() {
@@ -94,12 +106,12 @@ public class App extends Application {
             }
 
             @Override public void onActivityStarted(Activity activity) {
+                // when launch app from background resume, should check unlock pattern
                 if (activityCount == 0 && startMode != StartMode.START_NORMAL) {
-                    KLog.d("start up");
-                    activityCount++;
                     startActivityDispatch();
-                } else
-                    activityCount++;
+                }
+                // increase count
+                activityCount++;
             }
 
             @Override public void onActivityResumed(Activity activity) {
@@ -111,6 +123,7 @@ public class App extends Application {
             }
 
             @Override public void onActivityStopped(Activity activity) {
+                // reduce count
                 activityCount--;
             }
 
@@ -125,7 +138,7 @@ public class App extends Application {
     }
 
     private void initDatabase() {
-        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, "onekey.db");
+        DaoMaster.DevOpenHelper devOpenHelper = new DaoMaster.DevOpenHelper(this, DataUtil.DB_NAME);
         SQLiteDatabase writableDatabase = devOpenHelper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(writableDatabase);
         daoSession = daoMaster.newSession();
@@ -134,45 +147,24 @@ public class App extends Application {
             Object[] keys = Constants.CATAGORY_MAP.keySet().toArray();
             for (int i = 0; i <keys.length; i++) {
                 String key = (String) keys[i];
-                boolean flag = i < 10;
+                boolean flag = i < DataUtil.MAX_DEFAULT_CATEGORY_COUNT;
                 Category cate = new Category((long) i, Constants.CATAGORY_MAP.get(key), key, flag, 0);
                 daoSession.insert(cate);
             }
             PreferenceUtils.setDbInitialed(true);
-        } else if (getCategoryCount() == 0){
-            KLog.d("Category table is empty, fill some data");
-            Object[] keys = Constants.CATAGORY_MAP.keySet().toArray();
-            for (int i = 0; i <keys.length; i++) {
-                String key = (String) keys[i];
-                boolean flag = i < 10;
-                Category cate = new Category((long) i, Constants.CATAGORY_MAP.get(key), key, flag, 0);
-                daoSession.insert(cate);
-            }
         }
-
-
-        if (!PreferenceUtils.getMockDataFlag()) {
-            MockDataUtil.insertFackAccount();
-            PreferenceUtils.setMockDataFlag(true);
-        }
-
 
         QueryBuilder<Category> qb = daoSession.getCategoryDao().queryBuilder();
         List<Category> list = qb.list();
         KLog.d(list.toString());
     }
 
-    private int getCategoryCount() {
-        return daoSession.getCategoryDao().queryBuilder().list().size();
-    }
-
     private void startActivityDispatch() {
         if (PreferenceUtils.hasUnlockPattern()) {
-            KLog.d("lock exist, goto login");
-            Intent intent = new Intent(getInstance(), LoginActivity.class);
-            ActivityUtils.startActivity(intent);
+            KLog.d("unlock pattern exist, goto login");
+            ActivityUtils.startActivity(new Intent(getInstance(), LoginActivity.class));
         } else {
-            KLog.d("lock not exist, goto create");
+            KLog.d("unlock pattern not exist, goto create");
             ActivityUtils.startActivity(new Intent(this, CreateLockActivity.class));
         }
     }

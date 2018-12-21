@@ -34,7 +34,14 @@ import static com.vinsonzhan.onekey.common.StartMode.START_NORMAL;
 @IntDef({START_NORMAL, START_HOME_KEY_BG, START_BACK_KEY_BG})
 @Retention(RetentionPolicy.SOURCE)
 public @interface StartMode {
+    // start app with a new process, not resume from backend
     int START_NORMAL = 0;
+    /**
+     * last time, app exit with a home key event
+     */
     int START_HOME_KEY_BG = 1;
+    /**
+     * last time, app exit with a back key event
+     */
     int START_BACK_KEY_BG = 2;
 }

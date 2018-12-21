@@ -35,6 +35,13 @@ import java.util.List;
  */
 public class DataUtil {
 
+    public static final String DB_NAME = "onekey.db";
+
+    /**
+     *  the max count of categories that displayed when launch app at the first time
+     */
+    public static final int MAX_DEFAULT_CATEGORY_COUNT = 5;
+
     public static List<Category> getData() {
         QueryBuilder<Category> categoryQb = App.getDaoSession().getCategoryDao().queryBuilder();
         WhereCondition condition1 = CategoryDao.Properties.IsDefault.eq(true);
