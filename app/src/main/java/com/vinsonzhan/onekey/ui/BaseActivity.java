@@ -120,4 +120,19 @@ public class BaseActivity extends AppCompatActivity {
         super.onDestroy();
         unregisterReceiver(mHomeKeyEventReceiver);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
 }

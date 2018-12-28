@@ -16,6 +16,7 @@
 package com.vinsonzhan.onekey.ui;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -35,6 +36,7 @@ import com.vinsonzhan.onekey.util.PreferenceUtils;
 import com.vinsonzhan.onekey.widget.patternlock.PatternLockUtils;
 import com.vinsonzhan.onekey.widget.patternlock.PatternLockView;
 import com.vinsonzhan.onekey.widget.patternlock.PatternLockViewListener;
+import com.wei.android.lib.fingerprintidentify.aosp.FingerprintManagerCompat;
 
 import java.util.List;
 
@@ -57,7 +59,6 @@ public class LoginActivity extends BaseExitActivity {
 
     @BindView(R.id.pattern_lock_view)
     PatternLockView lockView;
-
     int errorCount = 0;
     @Override protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -67,7 +68,28 @@ public class LoginActivity extends BaseExitActivity {
         setContentView(R.layout.activity_create_lock_key);
         ButterKnife.bind(this);
         initView();
+
+        if (!PreferenceUtils.hasUnlockPattern()) {
+            KLog.d("unlock pattern not exist, goto create");
+            ActivityUtils.startActivity(new Intent(this, CreateLockActivity.class));
+            finish();
+        }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            FingerprintManagerCompat fmc = FingerprintManagerCompat.from(this);
+            if (fmc.isHardwareDetected() && fmc.hasEnrolledFingerprints()) {
+                fmc.authenticate(null, 0, null, authenticationCallback , null);
+            } else {
+                KLog.d(fmc.isHardwareDetected() + ", " +fmc.hasEnrolledFingerprints());
+            }
+
+        }
+    }
+
     private static final int MSG_CLEAR_PATTERN = 1;
 
     private Handler handler = new Handler(Looper.getMainLooper()) {
@@ -81,6 +103,23 @@ public class LoginActivity extends BaseExitActivity {
             }
         }
     };
+
+    private void doSuccess() {
+        switch (App.getInstance().getStartMode()) {
+            case StartMode.NOT_START_APP:
+            case StartMode.START_COLD:
+            case StartMode.START_BACK_KEY_BG:
+                // normal start , launch MainActivity
+                ActivityUtils.startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                LoginActivity.this.finish();
+                break;
+            case StartMode.START_HOME_KEY_BG:
+                // home event backend, just resume
+                finish();
+                break;
+        }
+        App.getInstance().setStartMode(StartMode.NOT_START_APP); // restore flag
+    }
 
     private PatternLockViewListener mPatternLockViewListener = new PatternLockViewListener() {
         @Override
@@ -113,20 +152,7 @@ public class LoginActivity extends BaseExitActivity {
             if (PreferenceUtils.compareUnlockPattern(key)) {
                 KLog.d("login success");
                 lockView.clearPattern();
-                switch (App.getInstance().getStartMode()) {
-                    case StartMode.START_NORMAL:
-                    case StartMode.START_BACK_KEY_BG:
-                        // normal start , launch MainActivity
-                        ActivityUtils.startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                        LoginActivity.this.finish();
-                        break;
-                    case StartMode.START_HOME_KEY_BG:
-                        // home event backend, just resume
-                        KLog.d(ActivityUtils.getTopActivity().getLocalClassName());
-                        LoginActivity.this.finish();
-                        break;
-                }
-                App.getInstance().setStartMode(StartMode.START_NORMAL); // restore flag
+                doSuccess();
             } else {
                 KLog.d("login failed");
                 errorCount ++;
@@ -173,4 +199,36 @@ public class LoginActivity extends BaseExitActivity {
         lockView.setInputEnabled(true);
         lockView.addPatternLockListener(mPatternLockViewListener);
     }
+
+    FingerprintManagerCompat.AuthenticationCallback authenticationCallback = new FingerprintManagerCompat.AuthenticationCallback() {
+        @Override
+        public void onAuthenticationError(int errMsgId, CharSequence errString) {
+            super.onAuthenticationError(errMsgId, errString);
+            KLog.d(errString);
+            tipsTitle.setText(R.string.tips_fingerprint_error1_retry);
+        }
+
+        @Override
+        public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
+            super.onAuthenticationHelp(helpMsgId, helpString);
+            KLog.d(helpString);
+        }
+
+        @Override
+        public void onAuthenticationSucceeded(FingerprintManagerCompat
+                                                      .AuthenticationResult result) {
+            super.onAuthenticationSucceeded(result);
+            KLog.d();
+            doSuccess();
+        }
+
+        @Override
+        public void onAuthenticationFailed() {
+            super.onAuthenticationFailed();
+            KLog.d();
+            tipsTitle.setText(R.string.tips_draw_pattern);
+            tipsContent.setVisibility(View.VISIBLE);
+            tipsContent.setText(R.string.tips_fingerprint_error2_wrong);
+        }
+    };
 }

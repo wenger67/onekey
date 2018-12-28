@@ -41,7 +41,10 @@ import org.greenrobot.greendao.query.QueryBuilder;
 
 import java.util.List;
 
-import static com.vinsonzhan.onekey.common.StartMode.START_NORMAL;
+import static com.vinsonzhan.onekey.common.StartMode.NOT_START_APP;
+import static com.vinsonzhan.onekey.common.StartMode.START_BACK_KEY_BG;
+import static com.vinsonzhan.onekey.common.StartMode.START_COLD;
+import static com.vinsonzhan.onekey.common.StartMode.START_HOME_KEY_BG;
 
 /**
   * project:Onekey
@@ -55,7 +58,7 @@ public class App extends Application {
     private static App INSTANCE;
     private static DaoSession daoSession;
     int activityCount = 0;
-    @StartMode int startMode = START_NORMAL;
+    @StartMode int startMode = START_COLD;
 
     public static App getInstance() {
         return INSTANCE;
@@ -91,7 +94,7 @@ public class App extends Application {
         TypefaceProvider.registerDefaultIconSets();
         Utils.init(this);
 
-        startActivityDispatch();
+        KLog.d(startMode);
     }
 
     private void initMockData(){
@@ -102,37 +105,35 @@ public class App extends Application {
     private void initListener() {
         registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacks() {
             @Override public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
+                KLog.d(activity.toString());
             }
 
             @Override public void onActivityStarted(Activity activity) {
-                // when launch app from background resume, should check unlock pattern
-                if (activityCount == 0 && startMode != StartMode.START_NORMAL) {
+                KLog.d(ActivityUtils.getActivityList());
+                if ((startMode == START_BACK_KEY_BG || startMode == START_HOME_KEY_BG) && !
+                        (activity instanceof LoginActivity)) {
                     startActivityDispatch();
                 }
-                // increase count
-                activityCount++;
             }
 
             @Override public void onActivityResumed(Activity activity) {
-
+                KLog.d(activity.toString());
             }
 
             @Override public void onActivityPaused(Activity activity) {
-
+                KLog.d(activity.toString());
             }
 
             @Override public void onActivityStopped(Activity activity) {
-                // reduce count
-                activityCount--;
+                KLog.d(activity.toString());
             }
 
             @Override public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
+                KLog.d(activity.toString());
             }
 
             @Override public void onActivityDestroyed(Activity activity) {
-
+                KLog.d(activity.toString());
             }
         });
     }

@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao' // apply plugin
 
-def getVersion() {
+static def getVersion() {
     def cmd = 'git rev-list HEAD --first-parent --count'
     return cmd.execute().text.trim().toInteger()
 }
 
-def buildTime() {
+static def buildTime() {
     return new Date().format("yyyyMMdd.HHmmss", TimeZone.getTimeZone("UTC"))
 }
 

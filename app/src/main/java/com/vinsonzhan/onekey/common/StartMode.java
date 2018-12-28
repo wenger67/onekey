@@ -22,7 +22,7 @@ import java.lang.annotation.RetentionPolicy;
 
 import static com.vinsonzhan.onekey.common.StartMode.START_BACK_KEY_BG;
 import static com.vinsonzhan.onekey.common.StartMode.START_HOME_KEY_BG;
-import static com.vinsonzhan.onekey.common.StartMode.START_NORMAL;
+import static com.vinsonzhan.onekey.common.StartMode.START_COLD;
 
 /**
  * project:onekey
@@ -31,11 +31,13 @@ import static com.vinsonzhan.onekey.common.StartMode.START_NORMAL;
  * author：Vinson.Zhan
  * comment：
  */
-@IntDef({START_NORMAL, START_HOME_KEY_BG, START_BACK_KEY_BG})
+@IntDef({START_COLD, START_HOME_KEY_BG, START_BACK_KEY_BG})
 @Retention(RetentionPolicy.SOURCE)
 public @interface StartMode {
+
+    int NOT_START_APP = -1;
     // start app with a new process, not resume from backend
-    int START_NORMAL = 0;
+    int START_COLD = 0;
     /**
      * last time, app exit with a home key event
      */
