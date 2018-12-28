@@ -21,6 +21,8 @@ public class PreferenceUtils {
     private static final String PREF_KEY_DB_INIT = "key_db_init";
     private static final String PREF_KEY_DB_MOCK = "key_db_mock";
 
+    private static final String PREF_KEY_FINGERPRINT_FAILED_TIMES = "key_fp_failed_times";
+
     private static SharedPreferences getSP() {
         return App.getInstance().getSharedPreferences(PREF_ONEKEY, Context.MODE_PRIVATE);
     }
@@ -69,6 +71,16 @@ public class PreferenceUtils {
     public static void setHasMockData(boolean flag) {
         SharedPreferences.Editor editor = getSP().edit();
         editor.putBoolean(PREF_KEY_DB_MOCK, flag);
+        editor.apply();
+    }
+
+    public static int getFailedTimes() {
+        return getSP().getInt(PREF_KEY_FINGERPRINT_FAILED_TIMES, 0);
+    }
+
+    public static void setFailedTimes(int times) {
+        SharedPreferences.Editor editor = getSP().edit();
+        editor.putInt(PREF_KEY_FINGERPRINT_FAILED_TIMES, times);
         editor.apply();
     }
 

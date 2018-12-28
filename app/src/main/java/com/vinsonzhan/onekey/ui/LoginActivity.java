@@ -16,6 +16,7 @@
 package com.vinsonzhan.onekey.ui;
 
 import android.content.Intent;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,8 @@ import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ActivityUtils;
@@ -119,6 +122,7 @@ public class LoginActivity extends BaseExitActivity {
                 break;
         }
         App.getInstance().setStartMode(StartMode.NOT_START_APP); // restore flag
+        PreferenceUtils.setFailedTimes(0); // reset failed times
     }
 
     private PatternLockViewListener mPatternLockViewListener = new PatternLockViewListener() {
@@ -143,6 +147,7 @@ public class LoginActivity extends BaseExitActivity {
                 KLog.d("lock key show large that 4 dot!");
                 // draw again
                 tipsTitle.setText(R.string.tips_error_draw_less);
+                tipsTitle.startAnimation(getAnimation());
                 tipsContent.setVisibility(View.INVISIBLE);
                 lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
                 handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
@@ -157,26 +162,11 @@ public class LoginActivity extends BaseExitActivity {
                 KLog.d("login failed");
                 errorCount ++;
                 // TODO: 2/6/18 lock app if failed more than 5 times
-                if (errorCount < 3) {
-                    tipsTitle.setText(getString(R.string.tips_fingerprint_error1_retry));
-                    lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
-                    handler.removeMessages(MSG_CLEAR_PATTERN);
-                    handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
-                } else if (errorCount < 5) {
-                    tipsTitle.setText(getString(R.string.title_draw_pattern));
-                    tipsContent.setVisibility(View.VISIBLE);
-                    tipsContent.setText(getString(R.string.tips_fingerprint_error2_wrong));
-                    lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
-                    handler.removeMessages(MSG_CLEAR_PATTERN);
-                    handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
-                } else {
-                    tipsTitle.setText(getString(R.string.title_draw_pattern));
-                    tipsContent.setVisibility(View.VISIBLE);
-                    tipsContent.setText(getString(R.string.tips_fingerprint_error3_disable));
-                    lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
-                    handler.removeMessages(MSG_CLEAR_PATTERN);
-                    handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
-                }
+                tipsTitle.setText(getString(R.string.tips_fingerprint_error1_retry));
+                tipsTitle.startAnimation(getAnimation());
+                lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
+                handler.removeMessages(MSG_CLEAR_PATTERN);
+                handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
             }
         }
 
@@ -206,12 +196,16 @@ public class LoginActivity extends BaseExitActivity {
             super.onAuthenticationError(errMsgId, errString);
             KLog.d(errString);
             tipsTitle.setText(R.string.tips_fingerprint_error1_retry);
+            tipsTitle.startAnimation(getAnimation());
         }
 
         @Override
         public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
             super.onAuthenticationHelp(helpMsgId, helpString);
             KLog.d(helpString);
+            tipsTitle.setText(helpString);
+            tipsContent.setVisibility(View.INVISIBLE);
+            tipsTitle.startAnimation(getAnimation());
         }
 
         @Override
@@ -219,16 +213,44 @@ public class LoginActivity extends BaseExitActivity {
                                                       .AuthenticationResult result) {
             super.onAuthenticationSucceeded(result);
             KLog.d();
-            doSuccess();
+            if (PreferenceUtils.getFailedTimes() >= 5) {
+                tipsTitle.setText(R.string.tips_draw_pattern);
+                tipsContent.setVisibility(View.VISIBLE);
+                tipsContent.setText(R.string.tips_fingerprint_error3_disable);
+                tipsTitle.startAnimation(getAnimation());
+                tipsContent.startAnimation(getAnimation());
+            } else {
+                doSuccess();
+            }
         }
 
         @Override
         public void onAuthenticationFailed() {
             super.onAuthenticationFailed();
             KLog.d();
-            tipsTitle.setText(R.string.tips_draw_pattern);
-            tipsContent.setVisibility(View.VISIBLE);
-            tipsContent.setText(R.string.tips_fingerprint_error2_wrong);
+            int time = PreferenceUtils.getFailedTimes();
+            PreferenceUtils.setFailedTimes(++time);
+
+            if (time <= 3) {
+                tipsTitle.setText(R.string.tips_fingerprint_error1_retry);
+                tipsTitle.startAnimation(getAnimation());
+            } else if (time < 5) {
+                tipsTitle.setText(R.string.title_draw_pattern);
+                tipsContent.setVisibility(View.VISIBLE);
+                tipsContent.setText(R.string.tips_fingerprint_error2_wrong);
+            } else {
+                tipsTitle.setText(R.string.title_draw_pattern);
+                tipsContent.setVisibility(View.VISIBLE);
+                tipsContent.setText(R.string.tips_fingerprint_error3_disable);
+            }
+            tipsTitle.startAnimation(getAnimation());
+            tipsContent.startAnimation(getAnimation());
         }
     };
+
+    private Animation getAnimation() {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(500);
+        return alphaAnimation;
+    }
 }
