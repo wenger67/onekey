@@ -16,7 +16,6 @@
 package com.vinsonzhan.onekey.ui;
 
 import android.content.Intent;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -147,7 +146,7 @@ public class LoginActivity extends BaseExitActivity {
                 KLog.d("lock key show large that 4 dot!");
                 // draw again
                 tipsTitle.setText(R.string.tips_error_draw_less);
-                tipsTitle.startAnimation(getAnimation());
+                tipsTitle.startAnimation(getAlphaAnimation(0, 1, 500));
                 tipsContent.setVisibility(View.INVISIBLE);
                 lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
                 handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
@@ -163,7 +162,7 @@ public class LoginActivity extends BaseExitActivity {
                 errorCount ++;
                 // TODO: 2/6/18 lock app if failed more than 5 times
                 tipsTitle.setText(getString(R.string.tips_fingerprint_error1_retry));
-                tipsTitle.startAnimation(getAnimation());
+                tipsTitle.startAnimation(getAlphaAnimation(0, 1, 500));
                 lockView.setViewMode(PatternLockView.PatternViewMode.WRONG);
                 handler.removeMessages(MSG_CLEAR_PATTERN);
                 handler.sendEmptyMessageDelayed(MSG_CLEAR_PATTERN, 1000);
@@ -196,7 +195,7 @@ public class LoginActivity extends BaseExitActivity {
             super.onAuthenticationError(errMsgId, errString);
             KLog.d(errString);
             tipsTitle.setText(R.string.tips_fingerprint_error1_retry);
-            tipsTitle.startAnimation(getAnimation());
+            tipsTitle.startAnimation(getAlphaAnimation(0, 1, 500));
         }
 
         @Override
@@ -205,7 +204,7 @@ public class LoginActivity extends BaseExitActivity {
             KLog.d(helpString);
             tipsTitle.setText(helpString);
             tipsContent.setVisibility(View.INVISIBLE);
-            tipsTitle.startAnimation(getAnimation());
+            tipsTitle.startAnimation(getAlphaAnimation(0, 1, 500));
         }
 
         @Override
@@ -214,11 +213,12 @@ public class LoginActivity extends BaseExitActivity {
             super.onAuthenticationSucceeded(result);
             KLog.d();
             if (PreferenceUtils.getFailedTimes() >= 5) {
-                tipsTitle.setText(R.string.tips_draw_pattern);
+                tipsTitle.setText(R.string.title_draw_pattern);
                 tipsContent.setVisibility(View.VISIBLE);
                 tipsContent.setText(R.string.tips_fingerprint_error3_disable);
-                tipsTitle.startAnimation(getAnimation());
-                tipsContent.startAnimation(getAnimation());
+                tipsTitle.startAnimation(getAlphaAnimation(0, 1, 500));
+                tipsContent.startAnimation(getAlphaAnimation(0, 1, 500));
+                lockView.startAnimation(getAlphaAnimation(0.3f, 1, 500));
             } else {
                 doSuccess();
             }
@@ -233,7 +233,6 @@ public class LoginActivity extends BaseExitActivity {
 
             if (time <= 3) {
                 tipsTitle.setText(R.string.tips_fingerprint_error1_retry);
-                tipsTitle.startAnimation(getAnimation());
             } else if (time < 5) {
                 tipsTitle.setText(R.string.title_draw_pattern);
                 tipsContent.setVisibility(View.VISIBLE);
@@ -243,14 +242,34 @@ public class LoginActivity extends BaseExitActivity {
                 tipsContent.setVisibility(View.VISIBLE);
                 tipsContent.setText(R.string.tips_fingerprint_error3_disable);
             }
-            tipsTitle.startAnimation(getAnimation());
-            tipsContent.startAnimation(getAnimation());
+            tipsTitle.startAnimation(getAlphaAnimation(0, 1, 500));
+            tipsContent.startAnimation(getAlphaAnimation(0, 1, 500));
+            lockView.startAnimation(getAlphaAnimation(0.3f, 1, 500));
         }
     };
 
-    private Animation getAnimation() {
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(500);
+    private Animation getAlphaAnimation(float start, float end, long duration) {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(start, end);
+        alphaAnimation.setDuration(duration);
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                tipsTitle.setTextColor(getResources().getColor(R.color.error));
+                tipsContent.setTextColor(getResources().getColor(R.color.error));
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+                tipsTitle.setTextColor(getResources().getColor(R.color.black));
+                tipsContent.setTextColor(getResources().getColor(R.color.black));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
         return alphaAnimation;
     }
 }
