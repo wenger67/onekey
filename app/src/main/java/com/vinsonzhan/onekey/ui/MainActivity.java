@@ -18,6 +18,7 @@ package com.vinsonzhan.onekey.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,25 +48,28 @@ import butterknife.ButterKnife;
 import eu.davidea.flexibleadapter.FlexibleAdapter;
 import eu.davidea.flexibleadapter.items.IFlexible;
 
-public class MainActivity extends BaseExitActivity implements OpsListener, FlexibleAdapter
-        .OnItemClickListener, FlexibleAdapter.OnItemLongClickListener {
+public class MainActivity extends BaseExitActivity  {
 
-    @BindView(R.id.rv_category)
-    RecyclerView recyclerView;
     @BindView(R.id.navigation)
     NavigationView navigationView;
     @BindView(R.id.toolBar)
     android.support.v7.widget.Toolbar toolbar;
     @BindView(R.id.drawer)
     DrawerLayout drawerLayout;
-    CategoryAdapter adapter;
+    CategoriesFragment categoriesFragment = new CategoriesFragment();
+    AccountsFragment accountsFragment = new AccountsFragment();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        initView();
+    }
 
+    private void initView() {
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar,
                 R.string.nav_drawer_open, R.string.nav_drawer_close);
@@ -75,26 +79,8 @@ public class MainActivity extends BaseExitActivity implements OpsListener, Flexi
         if (getSupportActionBar() != null) getSupportActionBar().setHomeButtonEnabled(true);
         toggle.syncState();
 
-        List<Category> categories = DataUtil.getData();
-
-        adapter = new CategoryAdapter(categories, this);
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        recyclerView.setHasFixedSize(false);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.setAdapter(adapter);
-    }
-
-    private AwesomeTextView getIcon(CharSequence icon, int size, int color) {
-        int s = size == 0 ? 24 : size;
-        int c = color == 0 ? android.R.color.black : color;
-
-        AwesomeTextView fab = new AwesomeTextView(this);
-        fab.setFontAwesomeIcon(icon);
-        fab.setTextSize(TypedValue.COMPLEX_UNIT_DIP, s);
-        fab.setTextColor(getResources().getColor(c));
-        fab.setClickable(true);
-
-        return fab;
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content,
+                categoriesFragment).commit();
     }
 
     @Override
@@ -122,44 +108,14 @@ public class MainActivity extends BaseExitActivity implements OpsListener, Flexi
         super.onResume();
     }
 
-    @Override
-    public void onOpsEvent(IFlexible data, @OpsType int opsType) {
-
-    }
-
-    private void snackSuccess(String msg) {
-        TSnackbar snackbar = TSnackbar.make(recyclerView, msg, TSnackbar.LENGTH_LONG);
-        View view = snackbar.getView();
-        view.setBackgroundColor(getResources().getColor(R.color.message));
-        TextView textView = (TextView) view.findViewById(com.androidadvance.topsnackbar.R.id
-                .snackbar_text);
-        textView.setTextColor(getResources().getColor(R.color.success));
-        snackbar.show();
-    }
-
-    @Override
-    public boolean onItemClick(View view, int position) {
+    public void switchToAccountsFragment(Category category) {
         KLog.d();
-        Category category = adapter.getItem(position);
-        if (category == null) return false;
-        if (category.getCount() == 0)
-            SnackbarUtils.with(recyclerView)
-                    .setMessage(getString(R.string.category_click_tips))
-                    .showWarning();
-        else {
-            Intent intent = new Intent(this, AccountListActivity.class);
-            intent.putExtra(CreateAcountActivity.EXTRA_CATEGORY, category);
-            ActivityUtils.startActivity(intent);
-        }
-        return true;
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(CreateAcountActivity.EXTRA_CATEGORY, category);
+        accountsFragment.setArguments(bundle);
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.fragment_content, accountsFragment);
+        transaction.commit();
     }
 
-    @Override
-    public void onItemLongClick(int position) {
-        KLog.d();
-        Category category = adapter.getItem(position);
-        Intent intent = new Intent(this, CreateAcountActivity.class);
-        intent.putExtra(CreateAcountActivity.EXTRA_CATEGORY, category);
-        ActivityUtils.startActivity(intent);
-    }
 }
